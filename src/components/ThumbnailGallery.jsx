@@ -1,177 +1,456 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Maximize2, X, Sparkles, Filter, Layers, ExternalLink } from 'lucide-react';
+import { Maximize2, X, Sparkles } from 'lucide-react';
 import Tape from './Tape.jsx';
 import Doodle from './Doodle.jsx';
 
-// Actual thumbnails from Water Eye's work
+// 49 Curated Production Thumbnails by Water Eye
 const THUMBNAILS = [
   {
-    id: 'we-1',
-    title: 'Best Pack? Sharpness 500K',
-    subtitle: 'Cinema 4D Render & Dynamic Lighting',
+    id: 'we-01',
+    title: '100 Days Cobblemon: Mega Garchomp',
+    subtitle: 'Fiery aura & explosive evolution showcase',
     category: 'Minecraft',
+    subcat: 'Cobblemon',
     tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/Watereye-1.webp',
+    img: '/samples/sample-01-mega-garchomp.webp',
     featured: true,
   },
   {
-    id: 'we-2',
-    title: 'WASD Movement & Controls Guide',
-    subtitle: '3D Character Posing with Vivid Chroma Glow',
+    id: 'we-02',
+    title: 'Giant Hunter: Hide and Seek',
+    subtitle: 'Colossal armored hunter tracking hidden player',
     category: 'Minecraft',
+    subcat: 'Boss Battles',
     tools: ['Photoshop', 'Blender'],
-    img: '/samples/Watereye (2).png',
-    featured: true,
+    img: '/samples/sample-02-giant-hunter.webp',
   },
   {
-    id: 'we-kitkat',
-    title: 'KitKat 4K Extreme Speedrun',
-    subtitle: 'Ultra High-Res Action Composition',
-    category: 'Gaming',
-    tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/kitkat.webp',
-    featured: true,
-  },
-  {
-    id: 'we-livinglegend',
-    title: 'LivingLegend Revamp Texture Pack',
-    subtitle: 'Brand Texture Showcase with Cinematic Depth',
+    id: 'we-03',
+    title: 'Skull Mountain Slayer',
+    subtitle: 'Dual enchanted blades atop bone peaks',
     category: 'Minecraft',
+    subcat: 'Boss Battles',
     tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/1945ad233122041.6a4b6ab3c6f5c.jpg',
+    img: '/samples/sample-03-skull-mountain-slayer.webp',
   },
   {
-    id: 'we-anchorcloud',
-    title: 'AnchorCloud 24/7 Hosting',
-    subtitle: 'Commercial Cloud Hosting Campaign',
-    category: 'Brand & Packs',
-    tools: ['Photoshop', '3D Modeling'],
-    img: '/samples/24a4df233122041.6a4b672b40ac7.png',
-  },
-  {
-    id: 'we-rank1',
-    title: 'Rank 1 Gladiator PvP Montage',
-    subtitle: 'High-Contrast Arena Highlight',
-    category: 'Gaming',
-    tools: ['Photoshop', 'Color Grading'],
-    img: '/samples/Watereye-2.webp',
-  },
-  {
-    id: 'we-netherite',
-    title: 'Netherite Armor Master Build',
-    subtitle: 'Dramatic Dark Atmospheric Lighting',
+    id: 'we-04',
+    title: "The Wither King's Invasion",
+    subtitle: 'Nether portals and floating Withers over castle siege',
     category: 'Minecraft',
-    tools: ['Photoshop', 'Blender'],
-    img: '/samples/05fa45233122041.69c780c5aab84.png',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-04-wither-king-invasion.webp',
   },
   {
-    id: 'we-c4d-anim',
-    title: 'Cinema 4D Character Animation',
-    subtitle: 'Full 3D Character Rigging & Camera Depth',
+    id: 'we-05',
+    title: 'Deep Sea Abyssal Serpent',
+    subtitle: 'Skeletal leviathan guarding sunken trident in abyss',
     category: '3D & Cinema 4D',
+    subcat: '3D & Cinema 4D',
     tools: ['Cinema 4D', 'Photoshop'],
-    img: '/samples/6f787a233122041.6a4b672b41247.png',
+    img: '/samples/sample-05-deep-sea-abyssal-serpent.webp',
   },
   {
-    id: 'we-senpai',
-    title: 'SenpaiSpider Custom Review',
-    subtitle: 'Bold Red Glow & Dramatic Text Hierarchy',
-    category: 'Gaming',
-    tools: ['Photoshop', 'Typography'],
-    img: '/samples/1a60ae233122041.69c780c5ab473.png',
-  },
-  {
-    id: 'we-c4d-light',
-    title: 'Cinema 4D Studio Lighting Setup',
-    subtitle: 'Volumetric Rays & Custom Shaders',
-    category: '3D & Cinema 4D',
-    tools: ['Cinema 4D', 'Octane'],
-    img: '/samples/dfd2ec233122041.6a4b672baf967.png',
-  },
-  {
-    id: 'we-bedwars-pack',
-    title: 'Best Texture Packs for Bedwars',
-    subtitle: 'Vibrant Split Screen Contrast',
+    id: 'we-06',
+    title: 'Diamond Legion vs Wither Storm',
+    subtitle: 'Colossal Wither Storm tractor beams facing royal army',
     category: 'Minecraft',
-    tools: ['Photoshop', 'Asset Compositing'],
-    img: '/samples/95f711233122041.6a4b6ab3c738d.png',
-  },
-  {
-    id: 'we-tournament',
-    title: 'The $10,000 Tournament Clutch',
-    subtitle: 'High Energy Competitive Esports Visual',
-    category: 'Gaming',
+    subcat: 'Boss Battles',
     tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/dacd91233122041.6a4b6ab3c77ec.jpg',
+    img: '/samples/sample-06-diamond-legion-wither-storm.webp',
   },
   {
-    id: 'we-parkour',
-    title: 'Extreme Parkour Speedrun Record',
-    subtitle: 'Motion Blur & Perspective Distortion',
+    id: 'we-07',
+    title: 'Empire Clash: Two Kingdoms',
+    subtitle: 'Golden warhammer warlord between Nether and Crystal legions',
     category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-07-empire-clash-two-kingdoms.webp',
+  },
+  {
+    id: 'we-08',
+    title: '100 Days Cobblemon: Alpha Charizard',
+    subtitle: 'Golden Alpha Charizard volcanic inferno',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
     tools: ['Photoshop', 'Blender'],
-    img: '/samples/2b856e233122041.69d7fc783d085.png',
+    img: '/samples/sample-08-alpha-charizard.webp',
   },
   {
-    id: 'we-hardcore',
-    title: 'Hardcore 100 Days Survival',
-    subtitle: 'Cinematic Storytelling Scene',
+    id: 'we-09',
+    title: 'Returning to My 10-Year-Old World',
+    subtitle: 'Nostalgic boat voyage to classic base',
     category: 'Minecraft',
-    tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/5262e3233122041.69d7fc783ddad.png',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-09-bulky-old-home-world.webp',
   },
   {
-    id: 'we-secrets',
-    title: 'Top 10 Secret Combat Mechanics',
-    subtitle: 'Intrigue & Mystery Hook Design',
-    category: 'Gaming',
-    tools: ['Photoshop', 'Visual FX'],
-    img: '/samples/Watereye-3.webp',
-  },
-  {
-    id: 'we-pro-movement',
-    title: 'Pro Movement & Keyboard Secrets',
-    subtitle: 'Keyboard Overlay & Motion Tracking',
-    category: 'Gaming',
-    tools: ['Photoshop', 'Typography'],
-    img: '/samples/9bc4d2233122041.68fda9e967b6d.jpg',
-  },
-  {
-    id: 'we-ranked-bedwars',
-    title: 'Ranked Bedwars Season Finale',
-    subtitle: 'Climactic Lighting & Epic Color Palette',
-    category: 'Gaming',
-    tools: ['Photoshop', 'Color Grading'],
-    img: '/samples/d22e61233122041.6a4b672c22527.jpg',
-  },
-  {
-    id: 'we-end-series',
-    title: 'Survival Series: The Final Dragon',
-    subtitle: 'Atmospheric Fog & Particle Rendering',
+    id: 'we-10',
+    title: 'Netherite Castle Vanguard',
+    subtitle: 'Enchanted three-warrior strike team outside grand fortress',
     category: 'Minecraft',
+    subcat: 'Boss Battles',
     tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/19b45d233122041.6a4b672baf324.png',
+    img: '/samples/sample-10-netherite-castle-vanguard.webp',
   },
   {
-    id: 'we-pvp-tricks',
-    title: 'Secret PvP Tricks You Never Knew',
-    subtitle: 'High CTR Curiosity Composition',
-    category: 'Gaming',
-    tools: ['Photoshop', 'Lighting'],
-    img: '/samples/e8034a233122041.6a4b672c220c3.jpg',
+    id: 'we-11',
+    title: 'The Ancient Ice Cavern Stargate',
+    subtitle: 'Lone explorer with lantern discovering glowing cyan gateway',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-11-ice-cavern-stargate.webp',
   },
   {
-    id: 'we-live-stream',
-    title: 'Minecraft Championship Live',
-    subtitle: 'Streaming Banner & Broadcast Visual',
-    category: 'Brand & Packs',
+    id: 'we-12',
+    title: 'Minecraft Feudal: Demon Samurai & Dragon',
+    subtitle: 'Crimson demon unsheathing katana with purple winding dragon',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
     tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/f4043e233122041.693da2adbafb9.jpg',
+    img: '/samples/sample-12-feudal-demon-samurai.webp',
+  },
+  {
+    id: 'we-13',
+    title: '100 Days TNT Nuke Stronghold',
+    subtitle: 'Massive atomic TNT mushroom cloud obliterating stone stronghold',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-13-fortress-tnt-nuke.webp',
+  },
+  {
+    id: 'we-14',
+    title: 'The Casket of Reveries: Titan Concept',
+    subtitle: 'Ancient rune titan golem color study',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Digital Painting'],
+    img: '/samples/sample-14-casket-of-reveries-study.webp',
+  },
+  {
+    id: 'we-15',
+    title: 'The Casket of Reveries: Awakened Titan',
+    subtitle: 'Ancient rune colossus glowing with purple glyphs',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-15-casket-of-reveries-awakened.webp',
+  },
+  {
+    id: 'we-16',
+    title: '100 Days Cobblemon: Shiny Charizard',
+    subtitle: 'Dark Shiny Charizard unleashing crimson flames over crags',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-16-shiny-charizard.webp',
+  },
+  {
+    id: 'we-17',
+    title: '100 Days Cobblemon: Summer Pikachu',
+    subtitle: 'Pikachu in sunglasses & tropical shirt with iced drink',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-17-chilled-pikachu.webp',
+  },
+  {
+    id: 'we-18',
+    title: 'Orbital Strike TNT Cannon',
+    subtitle: 'King targeting fortress with raining rings of TNT',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-18-orbital-strike-cannon.webp',
+  },
+  {
+    id: 'we-19',
+    title: '100 Days Cobblemon: Primal Groudon',
+    subtitle: 'Molten Primal Groudon roaring over volcanic eruption',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-19-primal-groudon.webp',
+  },
+  {
+    id: 'we-20',
+    title: 'Minecraft Fantasy: Arcane Grand Wizard',
+    subtitle: 'Purple-robed archmage wielding glowing grimoire & staff',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-20-arcane-grand-wizard.webp',
+  },
+  {
+    id: 'we-21',
+    title: '100 Days Fantasy: Runic Axe vs Lich King',
+    subtitle: 'Hero flanked by winged fire demon and skeleton overlord',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-21-runic-axe-lich-demon.webp',
+  },
+  {
+    id: 'we-22',
+    title: '100 Days Hardcore: Crimson Fire Dragon',
+    subtitle: 'Colossal red dragon breathing infernal fire over fortress',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-22-crimson-fire-dragon.webp',
+  },
+  {
+    id: 'we-23',
+    title: "The Enchanted Legion's March",
+    subtitle: 'Purple warlord leading armored warriors from grand cathedral',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-23-enchanted-legion-march.webp',
+  },
+  {
+    id: 'we-24',
+    title: '100 Days Prominence: The Hasturian Era',
+    subtitle: 'Yellow-robed eldritch king Hastur with cosmic floating eyes',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-24-prominence-hasturian-era.webp',
+  },
+  {
+    id: 'we-25',
+    title: 'Colossal Red-Eyed Mech Spider',
+    subtitle: 'Giant mechanical terror towering over snowy forest',
+    category: '3D & Cinema 4D',
+    subcat: '3D & Cinema 4D',
+    tools: ['Cinema 4D', 'Photoshop'],
+    img: '/samples/sample-25-colossal-mech-spider.webp',
+  },
+  {
+    id: 'we-26',
+    title: 'The Underwater Trident King',
+    subtitle: 'Dolphin rider leading diamond guard toward submerged temples',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-26-underwater-trident-king.webp',
+  },
+  {
+    id: 'we-27',
+    title: '100 Days Soulrem: Fire & Blood',
+    subtitle: 'Flaming sword champion and horned knight under blood moon',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-27-soulrem-fire-and-blood.webp',
+  },
+  {
+    id: 'we-28',
+    title: 'Minecraft Feudal: Katana Samurai & Dragon',
+    subtitle: 'Red warrior unsheathing katana with eastern dragon over pagodas',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-28-feudal-katana-samurai-dragon.webp',
+  },
+  {
+    id: 'we-29',
+    title: 'Minecraft Feudal: Bamboo Forest Samurai',
+    subtitle: 'Cyan armored warrior walking through sunlit misty bamboo grove',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-29-bamboo-forest-samurai.webp',
+  },
+  {
+    id: 'we-30',
+    title: 'Radiant SMP: Midnight Minecart Squad',
+    subtitle: 'Four players speeding on night rails led by enchanted king',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-30-radiant-smp-midnight-railway.webp',
+  },
+  {
+    id: 'we-31',
+    title: '100 Days Fantasy: Paladin vs Dark Knight',
+    subtitle: 'Golden champion dueling dark knight before burning fortress',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-31-golden-paladin-vs-dark-knight.webp',
+  },
+  {
+    id: 'we-32',
+    title: '100 Days Prominence: Spellcasters at Twilight',
+    subtitle: 'Purple mage duo with lightning staff and flaming sword on battlements',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-32-prominence-twilight-spellcasters.webp',
+  },
+  {
+    id: 'we-33',
+    title: '100 Days Superior: Lightning Warrior & Sorceress',
+    subtitle: 'Storm blade champion and witch summoning celestial magic circle',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-33-superior-lightning-warrior-sorceress.webp',
+  },
+  {
+    id: 'we-34',
+    title: 'Radiant SMP: Daylight Minecart Expedition',
+    subtitle: 'Sunlit alpine railway journey with full creator squad',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-34-radiant-smp-daylight-expedition.webp',
+  },
+  {
+    id: 'we-35',
+    title: 'Cobblemon: Mega Rayquaza & Meteor Shower',
+    subtitle: 'Sky dragon descending amidst burning atmospheric fireballs',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-35-mega-rayquaza-meteors.webp',
+  },
+  {
+    id: 'we-36',
+    title: 'Fallen Rival in the Deep Woods',
+    subtitle: 'Diamond king and warrior standing over defeated adversary',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-36-fallen-rival-deep-woods.webp',
+  },
+  {
+    id: 'we-37',
+    title: 'Radiant SMP Day 2: The Alliance Assembles',
+    subtitle: 'Full server team gathering on vibrant grassy plains',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-37-radiant-smp-day2-alliance.webp',
+  },
+  {
+    id: 'we-38',
+    title: 'Samurai & Arcane Sorcerer Duo',
+    subtitle: 'Cyan blade master and purple mage channeling golden magic rune',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-38-samurai-arcane-duo.webp',
+  },
+  {
+    id: 'we-39',
+    title: 'Winter Woods Showdown',
+    subtitle: 'Snowy forest clash between cloaked hero and rage-empowered fighter',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-39-winter-woods-showdown.webp',
+  },
+  {
+    id: 'we-40',
+    title: '100 Days Cobblemon: Cavern Onix',
+    subtitle: 'Giant stone serpent roaring from subterranean abyss',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-40-cavern-onix.webp',
+  },
+  {
+    id: 'we-41',
+    title: '100 Days Cobblemon: Shiny Greninja',
+    subtitle: 'Submerged black ninja frog ready with dual water shurikens',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-41-shiny-greninja.webp',
+  },
+  {
+    id: 'we-42',
+    title: '100 Days Cobblemon: The Starter Trio',
+    subtitle: 'Treecko, Fennekin, and Totodile leaping across sunny meadow',
+    category: 'Minecraft',
+    subcat: 'Cobblemon',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-42-cobblemon-starter-trio.webp',
+  },
+  {
+    id: 'we-43',
+    title: 'The Chained Celestial Blade',
+    subtitle: 'King standing before immense runic celestial sword in cosmic void',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-43-chained-celestial-blade.webp',
+  },
+  {
+    id: 'we-44',
+    title: 'Double Chest of Enchanted Books',
+    subtitle: 'Two explorers discovering massive glowing enchanted loot',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Blender'],
+    img: '/samples/sample-44-double-chest-enchanted-books.webp',
+  },
+  {
+    id: 'we-45',
+    title: 'The Diamond Vanguard vs Wither Storm',
+    subtitle: 'King leading diamond army against colossal purple-beam boss',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-45-diamond-vanguard-vs-wither-storm.webp',
+  },
+  {
+    id: 'we-46',
+    title: 'Giant Mutant Zombie Titan',
+    subtitle: 'Player facing hulking mutant zombie horde under clear blue sky',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-46-giant-mutant-zombie.webp',
+  },
+  {
+    id: 'we-47',
+    title: 'Mutant Zombie Horde: Apocalyptic Sky',
+    subtitle: 'Mutant titan battle with moody twilight storm lighting',
+    category: 'Minecraft',
+    subcat: 'SMP & Adventure',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-47-mutant-zombie-apocalypse.webp',
+  },
+  {
+    id: 'we-48',
+    title: '100 Days RLCraft: Undead Skeleton King',
+    subtitle: 'Golden skeleton lord dual-wielding broadswords on skull mountain',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-48-rlcraft-skeleton-king.webp',
+  },
+  {
+    id: 'we-49',
+    title: '100 Days Prominence: The Hasturian Triad',
+    subtitle: 'Molten fire titan, flame champion & the King in Yellow',
+    category: 'Minecraft',
+    subcat: 'Boss Battles',
+    tools: ['Photoshop', 'Cinema 4D'],
+    img: '/samples/sample-49-prominence-hasturian-triad.webp',
   },
 ];
 
-const CATEGORIES = ['All', 'Minecraft', 'Gaming', '3D & Cinema 4D', 'Brand & Packs'];
+const CATEGORIES = ['All', 'Minecraft', 'Cobblemon', 'Boss Battles', 'SMP & Adventure', '3D & Cinema 4D'];
 
 export default function ThumbnailGallery() {
   const [selectedCat, setSelectedCat] = useState('All');
@@ -179,10 +458,25 @@ export default function ThumbnailGallery() {
 
   const filtered = useMemo(() => {
     if (selectedCat === 'All') return THUMBNAILS;
-    return THUMBNAILS.filter((t) => t.category === selectedCat);
+    if (selectedCat === 'Minecraft') return THUMBNAILS.filter((t) => t.category === 'Minecraft');
+    if (selectedCat === 'Cobblemon') return THUMBNAILS.filter((t) => t.subcat === 'Cobblemon');
+    if (selectedCat === 'Boss Battles') return THUMBNAILS.filter((t) => t.subcat === 'Boss Battles');
+    if (selectedCat === 'SMP & Adventure') return THUMBNAILS.filter((t) => t.subcat === 'SMP & Adventure');
+    if (selectedCat === '3D & Cinema 4D') return THUMBNAILS.filter((t) => t.category === '3D & Cinema 4D' || t.subcat === '3D & Cinema 4D');
+    return THUMBNAILS.filter((t) => t.category === selectedCat || t.subcat === selectedCat);
   }, [selectedCat]);
 
   const featured = useMemo(() => THUMBNAILS.find((t) => t.featured), []);
+
+  const getCatCount = useCallback((cat) => {
+    if (cat === 'All') return THUMBNAILS.length;
+    if (cat === 'Minecraft') return THUMBNAILS.filter((t) => t.category === 'Minecraft').length;
+    if (cat === 'Cobblemon') return THUMBNAILS.filter((t) => t.subcat === 'Cobblemon').length;
+    if (cat === 'Boss Battles') return THUMBNAILS.filter((t) => t.subcat === 'Boss Battles').length;
+    if (cat === 'SMP & Adventure') return THUMBNAILS.filter((t) => t.subcat === 'SMP & Adventure').length;
+    if (cat === '3D & Cinema 4D') return THUMBNAILS.filter((t) => t.category === '3D & Cinema 4D' || t.subcat === '3D & Cinema 4D').length;
+    return THUMBNAILS.filter((t) => t.category === cat || t.subcat === cat).length;
+  }, []);
 
   const handleOpenModal = useCallback((thumb) => {
     setActiveModal(thumb);
@@ -230,7 +524,7 @@ export default function ThumbnailGallery() {
               onClick={() => setSelectedCat(cat)}
             >
               {cat}
-              {cat === 'All' && <span className="cat-count">{THUMBNAILS.length}</span>}
+              <span className="cat-count">{getCatCount(cat)}</span>
             </button>
           );
         })}
@@ -313,7 +607,7 @@ export default function ThumbnailGallery() {
 
             <div className="thumb-details">
               <div className="thumb-meta-row">
-                <span className="thumb-category-tag">{item.category}</span>
+                <span className="thumb-category-tag">{item.subcat || item.category}</span>
                 <div className="thumb-tools">
                   {item.tools.map((t) => (
                     <span key={t} className="thumb-tool-tag">{t}</span>
@@ -347,7 +641,7 @@ export default function ThumbnailGallery() {
             >
               <div className="modal-header">
                 <div>
-                  <span className="modal-cat">{activeModal.category}</span>
+                  <span className="modal-cat">{activeModal.subcat || activeModal.category}</span>
                   <h3 className="modal-title">{activeModal.title}</h3>
                 </div>
                 <button

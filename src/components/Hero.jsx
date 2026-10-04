@@ -194,11 +194,11 @@ export default function Hero({ onNavigate }) {
               onClick={() => onNavigate('work')}
             >
               <img
-                src="/samples/Watereye-1.webp"
-                alt="Minecraft PvP Thumbnail Preview"
+                src="/samples/sample-01-mega-garchomp.webp"
+                alt="100 Days Cobblemon Mega Garchomp Thumbnail Preview"
                 loading="eager"
               />
-              <span className="hero-float-label">BEST PACK? 500K</span>
+              <span className="hero-float-label">100 DAYS COBBLEMON</span>
             </motion.div>
 
             {/* Floating Thumbnail Card 2 — Bottom Left */}
@@ -210,11 +210,11 @@ export default function Hero({ onNavigate }) {
               onClick={() => onNavigate('work')}
             >
               <img
-                src="/samples/Watereye (2).png"
-                alt="3D Minecraft Character Movement Thumbnail Preview"
+                src="/samples/sample-06-diamond-legion-wither-storm.webp"
+                alt="Diamond Legion vs Wither Storm Thumbnail Preview"
                 loading="eager"
               />
-              <span className="hero-float-label">3D MOVEMENT</span>
+              <span className="hero-float-label">WITHER STORM</span>
             </motion.div>
 
             {/* Turnaround Badge */}
