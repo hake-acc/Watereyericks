@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(samples|avatars|assets)/(.*)",
+      "source": "/(samples|creators|assets)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

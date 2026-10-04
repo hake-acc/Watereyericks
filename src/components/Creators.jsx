@@ -1,99 +1,204 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Star, Eye, Youtube, Sparkles, Quote } from 'lucide-react';
+import React from 'react';
+import { Youtube, ExternalLink } from 'lucide-react';
 import Tape from './Tape.jsx';
 import Doodle from './Doodle.jsx';
 
 const CREATORS = [
   {
-    name: 'Robbie XYZ',
-    handle: '@robbietonfr',
-    platform: 'YouTube',
-    avgViews: '18K Views',
-    rating: 5.0,
-    quote: 'Delivered exactly what I needed — first draft, no back-and-forth.',
-    avatar: '/avatars/robbietonfr.jpg',
-    category: 'Gaming',
+    id: 'yessmartypie',
+    name: 'YesSmartyPie',
+    subscribers: '6.89M',
+    youtubeUrl: 'https://www.youtube.com/@yessmartypie',
+    handle: '@yessmartypie',
+    avatar: '/creators/yessmartypie.webp',
   },
   {
+    id: 'senpaispider',
+    name: 'SenpaiSpider',
+    subscribers: '2.74M',
+    youtubeUrl: 'https://www.youtube.com/@senpaispider',
+    handle: '@senpaispider',
+    avatar: '/creators/senpaispider.webp',
+  },
+  {
+    id: 'yugplayz',
+    name: 'Yug Playz',
+    subscribers: '2.64M',
+    youtubeUrl: 'https://www.youtube.com/@yugplayz',
+    handle: '@yugplayz',
+    avatar: '/creators/yugplayz.webp',
+  },
+  {
+    id: 'senpaiextras',
+    name: 'SenpaiExtras',
+    subscribers: '2.38M',
+    youtubeUrl: 'https://www.youtube.com/@senpaiextras',
+    handle: '@senpaiextras',
+    avatar: '/creators/senpaiextras.webp',
+  },
+  {
+    id: 'imtiyano',
+    name: 'IMTIYANO',
+    subscribers: '1.92M',
+    youtubeUrl: 'https://www.youtube.com/@imtiyano',
+    handle: '@imtiyano',
+    avatar: '/creators/imtiyano.webp',
+  },
+  {
+    id: 'bulkystar',
+    name: 'Bulky Star',
+    subscribers: '1.42M',
+    youtubeUrl: 'https://www.youtube.com/@bulkystar',
+    handle: '@bulkystar',
+    avatar: '/creators/bulkystar.webp',
+  },
+  {
+    id: 'risibletwins',
+    name: 'Risible Twins',
+    subscribers: '1.17M',
+    youtubeUrl: 'https://www.youtube.com/@risibletwins',
+    handle: '@risibletwins',
+    avatar: '/creators/risibletwins.webp',
+  },
+  {
+    id: 'nizgamer',
+    name: 'Niz Gamer',
+    subscribers: '939K',
+    youtubeUrl: 'https://www.youtube.com/@nizgamer',
+    handle: '@nizgamer',
+    avatar: '/creators/nizgamer.webp',
+  },
+  {
+    id: 'pepper',
+    name: 'Pepper',
+    subscribers: '512K',
+    youtubeUrl: 'https://www.youtube.com/@pepperminecraft',
+    handle: '@pepperminecraft',
+    avatar: '/creators/pepper.webp',
+  },
+  {
+    id: 'unsortedguy',
+    name: 'unsorted guy',
+    subscribers: '441K',
+    youtubeUrl: 'https://www.youtube.com/@unsortedguy',
+    handle: '@unsortedguy',
+    avatar: '/creators/unsortedguy.webp',
+  },
+  {
+    id: 'mrfenix47',
+    name: 'Mr Fenix 47',
+    subscribers: '405K',
+    youtubeUrl: 'https://www.youtube.com/@mrfenix47',
+    handle: '@mrfenix47',
+    avatar: '/creators/mrfenix47.webp',
+  },
+  {
+    id: 'protagnst',
+    name: 'Protag nst',
+    subscribers: '379K',
+    youtubeUrl: 'https://www.youtube.com/@protagnst',
+    handle: '@protagnst',
+    avatar: '/creators/protagnst.webp',
+  },
+  {
+    id: 'bulky',
+    name: 'Bulky',
+    subscribers: '324K',
+    youtubeUrl: 'https://www.youtube.com/@bulky',
+    handle: '@bulky',
+    avatar: '/creators/bulky.webp',
+  },
+  {
+    id: 'notrexy',
+    name: 'NotRexy',
+    subscribers: '261K',
+    youtubeUrl: 'https://www.youtube.com/@notrexy',
+    handle: '@notrexy',
+    avatar: '/creators/notrexy.webp',
+  },
+  {
+    id: 'mitsuhagaming',
     name: 'Mitsuha Gaming',
-    handle: '@Mitsuha_Gaming',
-    platform: 'YouTube',
-    avgViews: '22K Views',
-    rating: 5.0,
-    quote: 'The thumbnail actually got more clicks than the video deserved.',
-    avatar: '/avatars/mitsuha_gaming.jpg',
-    category: 'Gaming',
+    subscribers: '123K',
+    youtubeUrl: 'https://www.youtube.com/@mitsuhagaming',
+    handle: '@mitsuhagaming',
+    avatar: '/creators/mitsuhagaming.webp',
   },
   {
-    name: 'Aadmi Infinity',
-    handle: '@AadmiPlays',
-    platform: 'YouTube',
-    avgViews: '31K Views',
-    rating: 5.0,
-    quote: 'Came back for a second batch — that says everything.',
-    avatar: '/avatars/aadmiplays.jpg',
-    category: 'Entertainment',
+    id: 'aadmiplays',
+    name: 'Aadmi Plays',
+    subscribers: '73.5K',
+    youtubeUrl: 'https://www.youtube.com/@aadmiiplays',
+    handle: '@aadmiiplays',
+    avatar: '/creators/aadmiplays.webp',
   },
   {
-    name: 'DeadLegend',
-    handle: '@LivingLegendOP',
-    platform: 'YouTube',
-    avgViews: '9K Views',
-    rating: 4.9,
-    quote: 'Clean style, fast delivery, understood the vibe immediately.',
-    avatar: '/avatars/livinglegendop.jpg',
-    category: 'Gaming',
+    id: 'iskevin',
+    name: 'IsKevin',
+    subscribers: '68.6K',
+    youtubeUrl: 'https://www.youtube.com/@iskevin',
+    handle: '@iskevin',
+    avatar: '/creators/iskevin.webp',
   },
   {
-    name: 'MC ThunderPlayz',
-    handle: '@MCThunderXDOfficial',
-    platform: 'YouTube',
-    avgViews: '7K Views',
-    rating: 4.9,
-    quote: 'The 3D treatment on the Minecraft thumbnails was fire.',
-    avatar: '/avatars/mcthunderxd.jpg',
-    category: 'Minecraft',
+    id: 'livingextra',
+    name: 'LivingExtra',
+    subscribers: '34.9K',
+    youtubeUrl: 'https://www.youtube.com/@livingextra',
+    handle: '@livingextra',
+    avatar: '/creators/livingextra.webp',
   },
   {
-    name: 'PYES KING',
-    handle: '@PYES_KING',
-    platform: 'YouTube',
-    avgViews: '25K Views',
-    rating: 4.9,
-    quote: 'Consistent quality across every single thumbnail. Very reliable.',
-    avatar: '/avatars/pyes_king.jpg',
-    category: 'Entertainment',
+    id: 'palmzy',
+    name: 'Palmzy',
+    subscribers: '27.4K',
+    youtubeUrl: 'https://www.youtube.com/@palmzyyt',
+    handle: '@palmzyyt',
+    avatar: '/creators/palmzy.webp',
   },
   {
-    name: 'ItzNect4r',
-    handle: '@ItzNect4r',
-    platform: 'YouTube',
-    avgViews: '12K Views',
-    rating: 4.8,
-    quote: 'First draft was almost perfect. Minor tweaks and it was done.',
-    avatar: '/avatars/itznect4r.jpg',
-    category: 'Minecraft',
+    id: 'definitelydeadyt',
+    name: 'DefinitelyDead',
+    subscribers: '22.8K',
+    youtubeUrl: 'https://www.youtube.com/@definitelydeadyt',
+    handle: '@definitelydeadyt',
+    avatar: '/creators/definitelydeadyt.webp',
   },
   {
-    name: 'Real Ayaz',
-    handle: '@Real_Ayaz',
-    platform: 'YouTube',
-    avgViews: '6K Views',
-    rating: 4.8,
-    quote: 'Knew exactly what to do without too many references.',
-    avatar: '/avatars/real_ayaz.jpg',
-    category: 'Shorts',
+    id: 'camel27',
+    name: 'Camel27',
+    subscribers: '18.3K',
+    youtubeUrl: 'https://www.youtube.com/@camel27',
+    handle: '@camel27',
+    avatar: '/creators/camel27.webp',
+  },
+  {
+    id: 'eltro',
+    name: 'ElTro',
+    subscribers: '10.4K',
+    youtubeUrl: 'https://www.youtube.com/@eltro',
+    handle: '@eltro',
+    avatar: '/creators/eltro.webp',
+  },
+  {
+    id: 'milanzonderq',
+    name: 'MilanZonderQ',
+    subscribers: '1.09K',
+    youtubeUrl: 'https://www.youtube.com/@milanzonderq',
+    handle: '@milanzonderq',
+    avatar: '/creators/milanzonderq.webp',
+  },
+  {
+    id: 'definitelydead',
+    name: 'DefinitelyDead',
+    subscribers: '739',
+    youtubeUrl: 'https://www.youtube.com/@definitelydead',
+    handle: '@definitelydead',
+    avatar: '/creators/definitelydead.webp',
   },
 ];
 
 export default function Creators() {
-  const [filter, setFilter] = useState('All');
-
-  const filtered = filter === 'All'
-    ? CREATORS
-    : CREATORS.filter(c => c.category === filter);
-
   return (
     <section id="creators" className="section creators-section">
       <div className="section-title">
@@ -101,27 +206,15 @@ export default function Creators() {
         <div>
           <h2 className="section-name">Creators Worked With</h2>
           <p className="section-subtitle">
-            Trusted by creators across gaming, Minecraft, and entertainment for channel thumbnails.
+            Trusted by YouTube creators and channels for high-CTR thumbnails and visual branding.
           </p>
         </div>
       </div>
 
-      <div className="creators-filter-row">
-        {['All', 'Gaming', 'Minecraft', 'Entertainment', 'Shorts'].map((cat) => (
-          <button
-            key={cat}
-            className={`creator-tab ${filter === cat ? 'active' : ''}`}
-            onClick={() => setFilter(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
       {/* Grid of 2-Layer Atmospheric Creator Cards */}
       <div className="creators-grid">
-        {filtered.map((creator, i) => (
-          <div className="atmospheric-creator-card" key={creator.name}>
+        {CREATORS.map((creator, i) => (
+          <div className="atmospheric-creator-card" key={creator.id}>
             <Tape position={i % 2 === 0 ? 'tl' : 'tr'} />
 
             {/* Reconstructed Two-Layer Atmospheric Background System */}
@@ -133,13 +226,17 @@ export default function Creators() {
 
             {/* Creator Card Content */}
             <div className="creator-card-inner">
-              {/* Avatar crossing the atmospheric transition line */}
+              {/* Channel Icon crossing the atmospheric transition line */}
               <div className="creator-avatar-wrap">
                 <div className="creator-avatar-ring">
                   <img
                     src={creator.avatar}
-                    alt={creator.name}
+                    alt={`${creator.name} channel icon`}
                     className="creator-avatar-img"
+                    width="74"
+                    height="74"
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
@@ -152,37 +249,24 @@ export default function Creators() {
 
               {/* Lower Surface Info */}
               <div className="creator-info-zone">
-                <div className="creator-name-row">
-                  <h3 className="creator-name">{creator.name}</h3>
-                </div>
-                
+                <h3 className="creator-name">{creator.name}</h3>
                 <span className="creator-handle">{creator.handle}</span>
 
-                <div className="creator-meta-pill">
-                  <span className="platform-tag">
-                    <Youtube size={12} /> {creator.platform}
-                  </span>
-                  <span className="meta-dot">●</span>
-                  <span className="views-tag">{creator.avgViews}</span>
+                <div className="creator-subs-badge">
+                  <Youtube size={13} className="subs-yt-icon" />
+                  <span>{creator.subscribers} Subscribers</span>
                 </div>
 
-                <div className="creator-quote-box">
-                  <Quote size={14} className="quote-icon" />
-                  <p className="creator-quote">{creator.quote}</p>
-                </div>
-
-                <div className="creator-rating-row">
-                  <div className="stars">
-                    {[...Array(5)].map((_, s) => (
-                      <Star
-                        key={s}
-                        size={12}
-                        className={s < Math.floor(creator.rating) ? 'star-filled' : 'star-half'}
-                      />
-                    ))}
-                  </div>
-                  <span className="rating-num">{creator.rating.toFixed(1)}</span>
-                </div>
+                <a
+                  href={creator.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="creator-channel-btn"
+                  aria-label={`Visit ${creator.name} YouTube Channel (opens in a new tab)`}
+                >
+                  <span>Channel</span>
+                  <ExternalLink size={12} className="btn-arrow" />
+                </a>
               </div>
             </div>
           </div>
