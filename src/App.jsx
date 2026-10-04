@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
 import QuickFacts from './components/QuickFacts.jsx';
@@ -9,11 +9,33 @@ import About from './components/About.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
 
+const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard.jsx'));
+
 const SECTIONS = ['home', 'work', 'creators', 'services', 'about', 'contact'];
 
 export default function App() {
+  const [isAdmin, setIsAdmin] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.location.pathname.startsWith('/admin');
+  });
+
   const [active, setActive] = useState('home');
   const [theme, setTheme] = useState(() => localStorage.getItem('we-theme') || 'dark');
+
+  // Handle client-side URL changes for private /admin route
+  useEffect(() => {
+    const handlePopState = () => {
+      setIsAdmin(window.location.pathname.startsWith('/admin'));
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateHome = useCallback(() => {
+    window.history.pushState({}, '', '/');
+    setIsAdmin(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   useEffect(() => {
     const resolved =
@@ -27,6 +49,8 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
+    if (isAdmin) return; // Don't run observer in admin mode
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -40,12 +64,27 @@ export default function App() {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [isAdmin]);
 
   const handleNavigate = useCallback((id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
+
+  if (isAdmin) {
+    return (
+      <Suspense
+        fallback={
+          <div className="admin-loading-screen">
+            <div className="admin-spinner" />
+            <span>Loading Water Eye Admin...</span>
+          </div>
+        }
+      >
+        <AdminDashboard onNavigateHome={navigateHome} />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="app">

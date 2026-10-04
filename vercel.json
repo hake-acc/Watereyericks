@@ -1,6 +1,19 @@
 {
   "headers": [
     {
+      "source": "/(admin|api/admin)(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/assets/(.*)",
       "headers": [
         {
@@ -10,7 +23,7 @@
       ]
     },
     {
-      "source": "/(samples|creators)/(.*)",
+      "source": "/(samples|thumbnails|comparisons|creators)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -26,6 +39,16 @@
           "value": "public, max-age=86400"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/index.html"
     }
   ]
 }

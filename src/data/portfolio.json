@@ -1,0 +1,845 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-10-04T17:30:09.941Z",
+  "thumbnails": [
+    {
+      "id": "we-01",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: Mega Garchomp",
+      "title": "100 Days Cobblemon: Mega Garchomp",
+      "subtitle": "Fiery aura & explosive evolution showcase",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-01-mega-garchomp.webp",
+      "img": "/samples/sample-01-mega-garchomp.webp",
+      "featured": true,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-02",
+      "type": "thumbnail",
+      "name": "Giant Hunter: Hide and Seek",
+      "title": "Giant Hunter: Hide and Seek",
+      "subtitle": "Colossal armored hunter tracking hidden player",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-02-giant-hunter.webp",
+      "img": "/samples/sample-02-giant-hunter.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-03",
+      "type": "thumbnail",
+      "name": "Skull Mountain Slayer",
+      "title": "Skull Mountain Slayer",
+      "subtitle": "Dual enchanted blades atop bone peaks",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-03-skull-mountain-slayer.webp",
+      "img": "/samples/sample-03-skull-mountain-slayer.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-04",
+      "type": "thumbnail",
+      "name": "The Wither King's Invasion",
+      "title": "The Wither King's Invasion",
+      "subtitle": "Nether portals and floating Withers over castle siege",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-04-wither-king-invasion.webp",
+      "img": "/samples/sample-04-wither-king-invasion.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-05",
+      "type": "thumbnail",
+      "name": "Deep Sea Abyssal Serpent",
+      "title": "Deep Sea Abyssal Serpent",
+      "subtitle": "Skeletal leviathan guarding sunken trident in abyss",
+      "category": "3D & Cinema 4D",
+      "subcat": "3D & Cinema 4D",
+      "tools": [
+        "Cinema 4D",
+        "Photoshop"
+      ],
+      "image": "/samples/sample-05-deep-sea-abyssal-serpent.webp",
+      "img": "/samples/sample-05-deep-sea-abyssal-serpent.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-06",
+      "type": "thumbnail",
+      "name": "Diamond Legion vs Wither Storm",
+      "title": "Diamond Legion vs Wither Storm",
+      "subtitle": "Colossal Wither Storm tractor beams facing royal army",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-06-diamond-legion-wither-storm.webp",
+      "img": "/samples/sample-06-diamond-legion-wither-storm.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-07",
+      "type": "thumbnail",
+      "name": "Empire Clash: Two Kingdoms",
+      "title": "Empire Clash: Two Kingdoms",
+      "subtitle": "Golden warhammer warlord between Nether and Crystal legions",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-07-empire-clash-two-kingdoms.webp",
+      "img": "/samples/sample-07-empire-clash-two-kingdoms.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-08",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: Alpha Charizard",
+      "title": "100 Days Cobblemon: Alpha Charizard",
+      "subtitle": "Golden Alpha Charizard volcanic inferno",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-08-alpha-charizard.webp",
+      "img": "/samples/sample-08-alpha-charizard.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-09",
+      "type": "thumbnail",
+      "name": "Returning to My 10-Year-Old World",
+      "title": "Returning to My 10-Year-Old World",
+      "subtitle": "Nostalgic boat voyage to classic base",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-09-bulky-old-home-world.webp",
+      "img": "/samples/sample-09-bulky-old-home-world.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-10",
+      "type": "thumbnail",
+      "name": "Netherite Castle Vanguard",
+      "title": "Netherite Castle Vanguard",
+      "subtitle": "Enchanted three-warrior strike team outside grand fortress",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-10-netherite-castle-vanguard.webp",
+      "img": "/samples/sample-10-netherite-castle-vanguard.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-11",
+      "type": "thumbnail",
+      "name": "The Ancient Ice Cavern Stargate",
+      "title": "The Ancient Ice Cavern Stargate",
+      "subtitle": "Lone explorer with lantern discovering glowing cyan gateway",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-11-ice-cavern-stargate.webp",
+      "img": "/samples/sample-11-ice-cavern-stargate.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-13",
+      "type": "thumbnail",
+      "name": "100 Days TNT Nuke Stronghold",
+      "title": "100 Days TNT Nuke Stronghold",
+      "subtitle": "Massive atomic TNT mushroom cloud obliterating stone stronghold",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-13-fortress-tnt-nuke.webp",
+      "img": "/samples/sample-13-fortress-tnt-nuke.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-15",
+      "type": "thumbnail",
+      "name": "The Casket of Reveries: Awakened Titan",
+      "title": "The Casket of Reveries: Awakened Titan",
+      "subtitle": "Ancient rune colossus glowing with purple glyphs",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-15-casket-of-reveries-awakened.webp",
+      "img": "/samples/sample-15-casket-of-reveries-awakened.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-16",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: Shiny Charizard",
+      "title": "100 Days Cobblemon: Shiny Charizard",
+      "subtitle": "Dark Shiny Charizard unleashing crimson flames over crags",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-16-shiny-charizard.webp",
+      "img": "/samples/sample-16-shiny-charizard.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-17",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: Summer Pikachu",
+      "title": "100 Days Cobblemon: Summer Pikachu",
+      "subtitle": "Pikachu in sunglasses & tropical shirt with iced drink",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-17-chilled-pikachu.webp",
+      "img": "/samples/sample-17-chilled-pikachu.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-18",
+      "type": "thumbnail",
+      "name": "Orbital Strike TNT Cannon",
+      "title": "Orbital Strike TNT Cannon",
+      "subtitle": "King targeting fortress with raining rings of TNT",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-18-orbital-strike-cannon.webp",
+      "img": "/samples/sample-18-orbital-strike-cannon.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-19",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: Primal Groudon",
+      "title": "100 Days Cobblemon: Primal Groudon",
+      "subtitle": "Molten Primal Groudon roaring over volcanic eruption",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-19-primal-groudon.webp",
+      "img": "/samples/sample-19-primal-groudon.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-20",
+      "type": "thumbnail",
+      "name": "Minecraft Fantasy: Arcane Grand Wizard",
+      "title": "Minecraft Fantasy: Arcane Grand Wizard",
+      "subtitle": "Purple-robed archmage wielding glowing grimoire & staff",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-20-arcane-grand-wizard.webp",
+      "img": "/samples/sample-20-arcane-grand-wizard.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-21",
+      "type": "thumbnail",
+      "name": "100 Days Fantasy: Runic Axe vs Lich King",
+      "title": "100 Days Fantasy: Runic Axe vs Lich King",
+      "subtitle": "Hero flanked by winged fire demon and skeleton overlord",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-21-runic-axe-lich-demon.webp",
+      "img": "/samples/sample-21-runic-axe-lich-demon.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-22",
+      "type": "thumbnail",
+      "name": "100 Days Hardcore: Crimson Fire Dragon",
+      "title": "100 Days Hardcore: Crimson Fire Dragon",
+      "subtitle": "Colossal red dragon breathing infernal fire over fortress",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-22-crimson-fire-dragon.webp",
+      "img": "/samples/sample-22-crimson-fire-dragon.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-23",
+      "type": "thumbnail",
+      "name": "The Enchanted Legion's March",
+      "title": "The Enchanted Legion's March",
+      "subtitle": "Purple warlord leading armored warriors from grand cathedral",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-23-enchanted-legion-march.webp",
+      "img": "/samples/sample-23-enchanted-legion-march.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-24",
+      "type": "thumbnail",
+      "name": "100 Days Prominence: The Hasturian Era",
+      "title": "100 Days Prominence: The Hasturian Era",
+      "subtitle": "Yellow-robed eldritch king Hastur with cosmic floating eyes",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-24-prominence-hasturian-era.webp",
+      "img": "/samples/sample-24-prominence-hasturian-era.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-25",
+      "type": "thumbnail",
+      "name": "Colossal Red-Eyed Mech Spider",
+      "title": "Colossal Red-Eyed Mech Spider",
+      "subtitle": "Giant mechanical terror towering over snowy forest",
+      "category": "3D & Cinema 4D",
+      "subcat": "3D & Cinema 4D",
+      "tools": [
+        "Cinema 4D",
+        "Photoshop"
+      ],
+      "image": "/samples/sample-25-colossal-mech-spider.webp",
+      "img": "/samples/sample-25-colossal-mech-spider.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-26",
+      "type": "thumbnail",
+      "name": "The Underwater Trident King",
+      "title": "The Underwater Trident King",
+      "subtitle": "Dolphin rider leading diamond guard toward submerged temples",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-26-underwater-trident-king.webp",
+      "img": "/samples/sample-26-underwater-trident-king.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-27",
+      "type": "thumbnail",
+      "name": "100 Days Soulrem: Fire & Blood",
+      "title": "100 Days Soulrem: Fire & Blood",
+      "subtitle": "Flaming sword champion and horned knight under blood moon",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-27-soulrem-fire-and-blood.webp",
+      "img": "/samples/sample-27-soulrem-fire-and-blood.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-28",
+      "type": "thumbnail",
+      "name": "Minecraft Feudal: Katana Samurai & Dragon",
+      "title": "Minecraft Feudal: Katana Samurai & Dragon",
+      "subtitle": "Red warrior unsheathing katana with eastern dragon over pagodas",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-28-feudal-katana-samurai-dragon.webp",
+      "img": "/samples/sample-28-feudal-katana-samurai-dragon.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-29",
+      "type": "thumbnail",
+      "name": "Minecraft Feudal: Bamboo Forest Samurai",
+      "title": "Minecraft Feudal: Bamboo Forest Samurai",
+      "subtitle": "Cyan armored warrior walking through sunlit misty bamboo grove",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-29-bamboo-forest-samurai.webp",
+      "img": "/samples/sample-29-bamboo-forest-samurai.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-30",
+      "type": "thumbnail",
+      "name": "Radiant SMP: Midnight Minecart Squad",
+      "title": "Radiant SMP: Midnight Minecart Squad",
+      "subtitle": "Four players speeding on night rails led by enchanted king",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-30-radiant-smp-midnight-railway.webp",
+      "img": "/samples/sample-30-radiant-smp-midnight-railway.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-31",
+      "type": "thumbnail",
+      "name": "100 Days Fantasy: Paladin vs Dark Knight",
+      "title": "100 Days Fantasy: Paladin vs Dark Knight",
+      "subtitle": "Golden champion dueling dark knight before burning fortress",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-31-golden-paladin-vs-dark-knight.webp",
+      "img": "/samples/sample-31-golden-paladin-vs-dark-knight.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-32",
+      "type": "thumbnail",
+      "name": "100 Days Prominence: Spellcasters at Twilight",
+      "title": "100 Days Prominence: Spellcasters at Twilight",
+      "subtitle": "Purple mage duo with lightning staff and flaming sword on battlements",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-32-prominence-twilight-spellcasters.webp",
+      "img": "/samples/sample-32-prominence-twilight-spellcasters.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-33",
+      "type": "thumbnail",
+      "name": "100 Days Superior: Lightning Warrior & Sorceress",
+      "title": "100 Days Superior: Lightning Warrior & Sorceress",
+      "subtitle": "Storm blade champion and witch summoning celestial magic circle",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-33-superior-lightning-warrior-sorceress.webp",
+      "img": "/samples/sample-33-superior-lightning-warrior-sorceress.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-34",
+      "type": "thumbnail",
+      "name": "Radiant SMP: Daylight Minecart Expedition",
+      "title": "Radiant SMP: Daylight Minecart Expedition",
+      "subtitle": "Sunlit alpine railway journey with full creator squad",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-34-radiant-smp-daylight-expedition.webp",
+      "img": "/samples/sample-34-radiant-smp-daylight-expedition.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-35",
+      "type": "thumbnail",
+      "name": "Cobblemon: Mega Rayquaza & Meteor Shower",
+      "title": "Cobblemon: Mega Rayquaza & Meteor Shower",
+      "subtitle": "Sky dragon descending amidst burning atmospheric fireballs",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-35-mega-rayquaza-meteors.webp",
+      "img": "/samples/sample-35-mega-rayquaza-meteors.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-36",
+      "type": "thumbnail",
+      "name": "Fallen Rival in the Deep Woods",
+      "title": "Fallen Rival in the Deep Woods",
+      "subtitle": "Diamond king and warrior standing over defeated adversary",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-36-fallen-rival-deep-woods.webp",
+      "img": "/samples/sample-36-fallen-rival-deep-woods.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-37",
+      "type": "thumbnail",
+      "name": "Radiant SMP Day 2: The Alliance Assembles",
+      "title": "Radiant SMP Day 2: The Alliance Assembles",
+      "subtitle": "Full server team gathering on vibrant grassy plains",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-37-radiant-smp-day2-alliance.webp",
+      "img": "/samples/sample-37-radiant-smp-day2-alliance.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-38",
+      "type": "thumbnail",
+      "name": "Samurai & Arcane Sorcerer Duo",
+      "title": "Samurai & Arcane Sorcerer Duo",
+      "subtitle": "Cyan blade master and purple mage channeling golden magic rune",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-38-samurai-arcane-duo.webp",
+      "img": "/samples/sample-38-samurai-arcane-duo.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-39",
+      "type": "thumbnail",
+      "name": "Winter Woods Showdown",
+      "title": "Winter Woods Showdown",
+      "subtitle": "Snowy forest clash between cloaked hero and rage-empowered fighter",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-39-winter-woods-showdown.webp",
+      "img": "/samples/sample-39-winter-woods-showdown.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-40",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: Cavern Onix",
+      "title": "100 Days Cobblemon: Cavern Onix",
+      "subtitle": "Giant stone serpent roaring from subterranean abyss",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-40-cavern-onix.webp",
+      "img": "/samples/sample-40-cavern-onix.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-41",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: Shiny Greninja",
+      "title": "100 Days Cobblemon: Shiny Greninja",
+      "subtitle": "Submerged black ninja frog ready with dual water shurikens",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-41-shiny-greninja.webp",
+      "img": "/samples/sample-41-shiny-greninja.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-42",
+      "type": "thumbnail",
+      "name": "100 Days Cobblemon: The Starter Trio",
+      "title": "100 Days Cobblemon: The Starter Trio",
+      "subtitle": "Treecko, Fennekin, and Totodile leaping across sunny meadow",
+      "category": "Minecraft",
+      "subcat": "Cobblemon",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-42-cobblemon-starter-trio.webp",
+      "img": "/samples/sample-42-cobblemon-starter-trio.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-43",
+      "type": "thumbnail",
+      "name": "The Chained Celestial Blade",
+      "title": "The Chained Celestial Blade",
+      "subtitle": "King standing before immense runic celestial sword in cosmic void",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-43-chained-celestial-blade.webp",
+      "img": "/samples/sample-43-chained-celestial-blade.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-44",
+      "type": "thumbnail",
+      "name": "Double Chest of Enchanted Books",
+      "title": "Double Chest of Enchanted Books",
+      "subtitle": "Two explorers discovering massive glowing enchanted loot",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Blender"
+      ],
+      "image": "/samples/sample-44-double-chest-enchanted-books.webp",
+      "img": "/samples/sample-44-double-chest-enchanted-books.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-45",
+      "type": "thumbnail",
+      "name": "The Diamond Vanguard vs Wither Storm",
+      "title": "The Diamond Vanguard vs Wither Storm",
+      "subtitle": "King leading diamond army against colossal purple-beam boss",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-45-diamond-vanguard-vs-wither-storm.webp",
+      "img": "/samples/sample-45-diamond-vanguard-vs-wither-storm.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-46",
+      "type": "thumbnail",
+      "name": "Giant Mutant Zombie Titan",
+      "title": "Giant Mutant Zombie Titan",
+      "subtitle": "Player facing hulking mutant zombie horde under clear blue sky",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-46-giant-mutant-zombie.webp",
+      "img": "/samples/sample-46-giant-mutant-zombie.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-47",
+      "type": "thumbnail",
+      "name": "Mutant Zombie Horde: Apocalyptic Sky",
+      "title": "Mutant Zombie Horde: Apocalyptic Sky",
+      "subtitle": "Mutant titan battle with moody twilight storm lighting",
+      "category": "Minecraft",
+      "subcat": "SMP & Adventure",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-47-mutant-zombie-apocalypse.webp",
+      "img": "/samples/sample-47-mutant-zombie-apocalypse.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-48",
+      "type": "thumbnail",
+      "name": "100 Days RLCraft: Undead Skeleton King",
+      "title": "100 Days RLCraft: Undead Skeleton King",
+      "subtitle": "Golden skeleton lord dual-wielding broadswords on skull mountain",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-48-rlcraft-skeleton-king.webp",
+      "img": "/samples/sample-48-rlcraft-skeleton-king.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "we-49",
+      "type": "thumbnail",
+      "name": "100 Days Prominence: The Hasturian Triad",
+      "title": "100 Days Prominence: The Hasturian Triad",
+      "subtitle": "Molten fire titan, flame champion & the King in Yellow",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/samples/sample-49-prominence-hasturian-triad.webp",
+      "img": "/samples/sample-49-prominence-hasturian-triad.webp",
+      "featured": false,
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "ba-feudal-samurai",
+      "type": "slider",
+      "name": "Minecraft Feudal: Demon Samurai & Dragon",
+      "title": "Minecraft Feudal: Demon Samurai & Dragon",
+      "subtitle": "From initial concept rough to epic dragon showdown",
+      "description": "Transformed an initial concept into a high-CTR action thumbnail by introducing a massive winding purple celestial dragon, dynamic crimson armor, and cinematic solar backlighting.",
+      "beforeImage": "/comparisons/feudal-samurai-before.webp",
+      "beforeImg": "/comparisons/feudal-samurai-before.webp",
+      "afterImage": "/comparisons/feudal-samurai-after.webp",
+      "afterImg": "/comparisons/feudal-samurai-after.webp",
+      "beforeLabel": "BEFORE (Initial Concept)",
+      "afterLabel": "AFTER (Final Polish)",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    },
+    {
+      "id": "ba-casket-reveries",
+      "type": "slider",
+      "name": "The Casket of Reveries: Titan Concept",
+      "title": "The Casket of Reveries: Titan Concept",
+      "subtitle": "Colorway exploration to final vibrant production render",
+      "description": "Explored atmospheric night twilight against high-contrast daylight. Finalized with vibrant cyan sky tones, lush foliage lighting, and radiant runic core illumination.",
+      "beforeImage": "/comparisons/casket-of-reveries-before.webp",
+      "beforeImg": "/comparisons/casket-of-reveries-before.webp",
+      "afterImage": "/comparisons/casket-of-reveries-after.webp",
+      "afterImg": "/comparisons/casket-of-reveries-after.webp",
+      "beforeLabel": "BEFORE (Twilight Concept)",
+      "afterLabel": "AFTER (Daylight Render)",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "createdAt": "2026-10-04T00:00:00.000Z"
+    }
+  ]
+}

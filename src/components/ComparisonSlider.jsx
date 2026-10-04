@@ -2,30 +2,9 @@ import React, { useState, useRef, useCallback } from 'react';
 import { Sliders, Sparkles } from 'lucide-react';
 import Tape from './Tape.jsx';
 
-export const COMPARISONS = [
-  {
-    id: 'ba-feudal-samurai',
-    title: 'Minecraft Feudal: Demon Samurai & Dragon',
-    subtitle: 'From initial concept rough to epic dragon showdown',
-    description: 'Transformed an initial concept into a high-CTR action thumbnail by introducing a massive winding purple celestial dragon, dynamic crimson armor, and cinematic solar backlighting.',
-    beforeImg: '/comparisons/feudal-samurai-before.webp',
-    afterImg: '/comparisons/feudal-samurai-after.webp',
-    beforeLabel: 'BEFORE (Initial Concept)',
-    afterLabel: 'AFTER (Final Polish)',
-    tools: ['Photoshop', 'Cinema 4D'],
-  },
-  {
-    id: 'ba-casket-reveries',
-    title: 'The Casket of Reveries: Titan Concept',
-    subtitle: 'Colorway exploration to final vibrant production render',
-    description: 'Explored atmospheric night twilight against high-contrast daylight. Finalized with vibrant cyan sky tones, lush foliage lighting, and radiant runic core illumination.',
-    beforeImg: '/comparisons/casket-of-reveries-before.webp',
-    afterImg: '/comparisons/casket-of-reveries-after.webp',
-    beforeLabel: 'BEFORE (Twilight Concept)',
-    afterLabel: 'AFTER (Daylight Render)',
-    tools: ['Photoshop', 'Cinema 4D'],
-  },
-];
+import portfolioData from '../data/portfolio.json';
+
+export const COMPARISONS = portfolioData.comparisons || [];
 
 function SingleComparison({ item, idx }) {
   const [sliderPos, setSliderPos] = useState(50);
@@ -41,8 +20,8 @@ function SingleComparison({ item, idx }) {
       <div className="comparison-media-wrap">
         {/* AFTER — Full Background */}
         <img
-          src={item.afterImg}
-          alt={`${item.title} — After Polish`}
+          src={item.afterImage || item.afterImg}
+          alt={`${item.title || item.name} — After Polish`}
           className="comparison-img comparison-img--after"
           loading="lazy"
         />
@@ -53,8 +32,8 @@ function SingleComparison({ item, idx }) {
           style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
         >
           <img
-            src={item.beforeImg}
-            alt={`${item.title} — Before Draft`}
+            src={item.beforeImage || item.beforeImg}
+            alt={`${item.title || item.name} — Before Draft`}
             className="comparison-img comparison-img--before"
             loading="lazy"
           />
