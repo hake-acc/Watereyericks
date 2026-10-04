@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
-import Skills from './components/Skills.jsx';
-import Education from './components/Education.jsx';
-import Achievements from './components/Achievements.jsx';
-import Projects from './components/Projects.jsx';
+import QuickFacts from './components/QuickFacts.jsx';
+import ThumbnailGallery from './components/ThumbnailGallery.jsx';
+import Creators from './components/Creators.jsx';
+import Services from './components/Services.jsx';
+import About from './components/About.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
-import QuickFacts from './components/QuickFacts.jsx';
 
-const SECTIONS = ['home', 'skills', 'education', 'achievements', 'projects', 'contact'];
+const SECTIONS = ['home', 'work', 'creators', 'services', 'about', 'contact'];
 
 export default function App() {
   const [active, setActive] = useState('home');
-  const [theme, setTheme] = useState(() => localStorage.getItem('mk-theme') || 'light');
+  const [theme, setTheme] = useState(() => localStorage.getItem('we-theme') || 'dark');
 
   useEffect(() => {
     const resolved =
@@ -23,7 +23,7 @@ export default function App() {
           : 'light'
         : theme;
     document.documentElement.setAttribute('data-theme', resolved);
-    localStorage.setItem('mk-theme', theme);
+    localStorage.setItem('we-theme', theme);
   }, [theme]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function App() {
           if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+      { rootMargin: '-30% 0px -55% 0px', threshold: 0 }
     );
     SECTIONS.forEach((id) => {
       const el = document.getElementById(id);
@@ -53,10 +53,10 @@ export default function App() {
       <main className="main">
         <Hero onNavigate={handleNavigate} />
         <QuickFacts />
-        <Skills />
-        <Education />
-        <Achievements />
-        <Projects />
+        <ThumbnailGallery />
+        <Creators />
+        <Services />
+        <About />
         <Contact />
         <Footer />
       </main>

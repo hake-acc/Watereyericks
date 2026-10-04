@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Cake, MapPin, Briefcase, Sparkles } from 'lucide-react';
+import { Clock, Layers, Sparkles, Flame } from 'lucide-react';
 import Tape from './Tape.jsx';
 
 const facts = [
-  { icon: Cake, label: 'Age', value: '23 Years Old' },
-  { icon: MapPin, label: 'Location', value: 'Delhi, India' },
-  { icon: Briefcase, label: 'Role', value: 'Full Stack Developer' },
-  { icon: Sparkles, label: 'Currently', value: 'Always Learning' },
+  { icon: Clock, label: 'Turnaround', value: '24–48 Hours' },
+  { icon: Layers, label: 'Source Files', value: 'Full .PSD Included' },
+  { icon: Sparkles, label: 'Revisions', value: 'Unlimited Iterations' },
+  { icon: Flame, label: 'Specialty', value: 'High-CTR YouTube Thumbnails' },
 ];
 
 export default function QuickFacts() {
@@ -22,7 +22,7 @@ export default function QuickFacts() {
       <Tape position="tl" />
       <Tape position="tr" />
       <div className="qf-header">
-        <span className="qf-header-code">// QUICK FACTS</span>
+        <span className="qf-header-code">// DESIGN STANDARDS</span>
         <span className="qf-header-line" />
       </div>
       <div className="qf-strip-grid">

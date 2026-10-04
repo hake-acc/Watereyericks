@@ -1,10 +1,20 @@
-# manishPortfolio
+# Water Eye — YouTube Thumbnail Designer Portfolio
 
-Personal developer portfolio for **Manish Kumar** — built as a digital scrapbook.
+Official production portfolio for **Water Eye**, an Indian YouTube Thumbnail Designer crafting high-CTR, scroll-stopping visual assets for YouTube creators.
 
-Stack: **React + Vite + Framer Motion + Lucide React** with custom CSS (no Tailwind).
+Stack: **React + Vite + Framer Motion + Lucide React** with custom CSS design tokens.
 
-## Getting started
+## Features
+
+- **Hero Showcase**: Prominent Water Eye portrait avatar with interactive floating thumbnail previews.
+- **Selected Thumbnails Gallery**: High-resolution 16:9 thumbnail showcase with category filters (Minecraft, Gaming, 3D & Cinema 4D, Brand & Packs) and full-screen inspection lightbox.
+- **Atmospheric Creator Cards**: Procedural two-layer atmospheric background cards featuring creators worked with, channel avatars, and ratings.
+- **Services & Delivery**: Core thumbnail design, Cinema 4D/Blender 3D character poses, series bulk packs, and channel branding.
+- **About Section**: Creative workflow, hook strategy, and 3D lighting pipeline.
+- **Contact & Commission**: Direct booking and commission channels with fast turnaround.
+- **Theming**: Dark mode (optimized for high-contrast thumbnails) and Light mode toggle.
+
+## Development
 
 ```bash
 npm install
@@ -20,53 +30,24 @@ npm run build
 npm run preview
 ```
 
-## Adding your assets
-
-Drop these files into `public/`:
-
-```
-public/
-├── resume.pdf
-└── images/
-    ├── manish.jpg
-    ├── nsut.png
-    ├── school.png
-    ├── portfolio.png
-    ├── ecommerce.png
-    └── dashboard.png
-```
-
-Missing images fall back to styled placeholders — nothing breaks.
-
 ## Structure
 
 ```
 src/
 ├── components/
-│   ├── Navbar.jsx        Left notebook sidebar with scroll-spy
-│   ├── Hero.jsx          Hero + photo + code annotations
-│   ├── QuickFacts.jsx    Peach sticky note (age / location / role)
-│   ├── Skills.jsx        Ruled notebook page with skill tags
-│   ├── Education.jsx     Mint paper with hand-drawn timeline
-│   ├── Achievements.jsx  Pinned cards
-│   ├── Projects.jsx      Taped photo cards
-│   ├── Contact.jsx       Contact card + paper plane
-│   ├── Footer.jsx
-│   ├── Paper.jsx         Reusable paper wrapper
-│   ├── Tape.jsx          Masking-tape strip
-│   └── Doodle.jsx        SVG doodle library (star, plane, trophy, ...)
+│   ├── Navbar.jsx             Left sidebar navigation with scroll-spy & theme toggle
+│   ├── Hero.jsx               Hero section with headline, avatar & floating thumbnails
+│   ├── QuickFacts.jsx         Design turnaround & quality standards strip
+│   ├── ThumbnailGallery.jsx   Filterable thumbnail gallery with full inspection modal
+│   ├── Creators.jsx           2-layer atmospheric creator showcase cards
+│   ├── Services.jsx           Thumbnail design offerings & deliverables
+│   ├── About.jsx              Water Eye background, software stack & design pipeline
+│   ├── Contact.jsx            Direct commission inquiries & turnaround info
+│   ├── Footer.jsx             Copyright & credits
+│   ├── Paper.jsx              Reusable paper wrapper
+│   ├── Tape.jsx               Decorative masking tape component
+│   └── Doodle.jsx             SVG doodle library
 ├── App.jsx
 ├── main.jsx
-└── index.css             All theming lives here (CSS variables)
+└── index.css                  Design tokens and responsive stylesheet
 ```
-
-## Theming
-
-Three modes: `light`, `system`, `dark`. Toggle from the sidebar.
-Dark mode preserves the paper aesthetic — no neon dashboard.
-
-## Notes
-
-- All colors, fonts and spacing live in CSS variables at the top of `index.css`.
-- Fonts (Caveat, Kalam, IBM Plex Mono, Inter, Permanent Marker) are loaded from Google Fonts in `index.html`.
-- Rotation, tape placement, and torn edges are utility classes — reuse them freely.

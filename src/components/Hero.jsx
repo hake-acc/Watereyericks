@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Github, Linkedin, Mail, Instagram, ArrowRight, Download,
-  MapPin,
+  ArrowRight, Sparkles, MapPin, Mail, Youtube, ExternalLink,
+  Flame, Zap, Clock
 } from 'lucide-react';
 
 export default function Hero({ onNavigate }) {
@@ -10,7 +10,7 @@ export default function Hero({ onNavigate }) {
 
   return (
     <section id="home" className="hero">
-      {/* Premium background */}
+      {/* Background ambient lighting */}
       <div className="hero-bg" aria-hidden="true">
         <div className="hero-bg-glow" />
         <div className="hero-bg-grid" />
@@ -27,28 +27,29 @@ export default function Hero({ onNavigate }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
             >
-              <div className="id-avatar">MK</div>
+              <div className="id-avatar">WE</div>
               <div className="id-body">
                 <div className="id-name">
-                  Manish Kumar
-                  <span className="id-verified">●</span>
+                  Water Eye
+                  <span className="id-verified" title="Verified Creator">●</span>
                 </div>
                 <div className="id-meta">
-                  <span>Full Stack Developer</span>
+                  <span>YouTube Thumbnail Designer</span>
                   <span className="id-dot" />
-                  <span className="id-loc"><MapPin size={10} /> Delhi</span>
+                  <span className="id-loc"><MapPin size={10} /> India</span>
                 </div>
               </div>
             </motion.div>
 
-            <motion.p
-              className="hero-hello"
-              initial={{ opacity: 0, x: -12 }}
+            <motion.div
+              className="hero-badge-pill"
+              initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.15 }}
+              transition={{ delay: 0.12 }}
             >
-              Hi there — I'm
-            </motion.p>
+              <span className="chip-dot" />
+              <span>Available for new YouTube projects</span>
+            </motion.div>
 
             <motion.h1
               className="hero-name"
@@ -56,7 +57,8 @@ export default function Hero({ onNavigate }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.55 }}
             >
-              <span className="hero-name-word">Manish.</span>
+              <span>Thumbnails that make people </span>
+              <span className="hero-name-accent">stop.</span>
             </motion.h1>
 
             <motion.p
@@ -65,7 +67,7 @@ export default function Hero({ onNavigate }) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.35 }}
             >
-              I build things for the web.
+              Crafted in Photoshop, Cinema 4D & Blender.
             </motion.p>
 
             <motion.p
@@ -74,14 +76,13 @@ export default function Hero({ onNavigate }) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.45 }}
             >
-              Computer Science student at{' '}
-              <span className="hl-purple">NSUT, Delhi</span> with a strong
-              foundation in <span className="hl-mint">DSA</span>. Passionate
-              about full-stack development and shipping real-world solutions.
+              Water Eye creates high-impact, scroll-stopping YouTube thumbnails designed to
+              maximize your click-through rate. Custom 3D character renders, cinematic lighting,
+              and aggressive visual hierarchy that commands attention in competitive feeds.
             </motion.p>
           </div>
 
-          {/* BOTTOM zone — anchored to bottom */}
+          {/* BOTTOM zone */}
           <div className="hero-bottom">
             <motion.div
               className="hero-toolbar"
@@ -89,18 +90,40 @@ export default function Hero({ onNavigate }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55 }}
             >
-              <button className="paper-btn paper-btn--filled" onClick={() => onNavigate('contact')}>
-                Contact me <ArrowRight size={14} />
+              <button
+                className="paper-btn paper-btn--filled"
+                onClick={() => onNavigate('work')}
+                aria-label="View thumbnail portfolio"
+              >
+                Explore Work <ArrowRight size={14} />
               </button>
-              <a href="/resume.pdf" className="paper-btn" download>
-                Resume <Download size={14} />
-              </a>
+              <button
+                className="paper-btn"
+                onClick={() => onNavigate('contact')}
+                aria-label="Contact for thumbnail commission"
+              >
+                Book a Thumbnail <Zap size={14} />
+              </button>
               <div className="toolbar-divider" />
               <div className="toolbar-socials">
-                <a href="https://github.com/" target="_blank" rel="noreferrer" className="social-icon" aria-label="GitHub"><Github size={16} /></a>
-                <a href="https://linkedin.com/" target="_blank" rel="noreferrer" className="social-icon" aria-label="LinkedIn"><Linkedin size={16} /></a>
-                <a href="mailto:manishkr28092003@gmail.com" className="social-icon" aria-label="Email"><Mail size={16} /></a>
-                <a href="https://instagram.com/" target="_blank" rel="noreferrer" className="social-icon" aria-label="Instagram"><Instagram size={16} /></a>
+                <a
+                  href="mailto:watereyebusiness@gmail.com"
+                  className="social-icon"
+                  aria-label="Email Water Eye"
+                  title="Email"
+                >
+                  <Mail size={16} />
+                </a>
+                <a
+                  href="https://youtube.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="social-icon"
+                  aria-label="Water Eye YouTube"
+                  title="YouTube"
+                >
+                  <Youtube size={16} />
+                </a>
               </div>
             </motion.div>
 
@@ -110,75 +133,110 @@ export default function Hero({ onNavigate }) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              <span className="stack-label">Currently working with</span>
+              <span className="stack-label">Crafted with</span>
               <div className="stack-line" />
               <div className="stack-tags">
-                <span>React</span>
-                <span>Next.js</span>
-                <span>Node</span>
-                <span>MongoDB</span>
-                <span>C++</span>
+                <span>Adobe Photoshop</span>
+                <span>Cinema 4D</span>
+                <span>Blender 3D</span>
+                <span>After Effects</span>
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* ============ RIGHT — big portrait, floating chips ============ */}
+        {/* ============ RIGHT — Portrait with Floating Thumbnail Showcase ============ */}
         <div className="hero-right">
           <div className="portrait">
             <div className="portrait-halo" aria-hidden="true" />
 
-            {/* Available chip — top */}
+            {/* Status chip */}
             <motion.div
               className="portrait-chip"
               initial={{ opacity: 0, y: -10, rotate: -8 }}
-              animate={{ opacity: 1, y: 0, rotate: -4 }}
+              animate={{ opacity: 1, y: 0, rotate: -3 }}
               transition={{ delay: 0.7, duration: 0.5 }}
             >
               <span className="chip-dot" />
-              <span>Available for work</span>
+              <span>Fast 24–48h Turnaround</span>
             </motion.div>
 
-            {/* THE cartoon — huge, free-floating */}
+            {/* Central Water Eye Avatar */}
             <motion.div
               className="portrait-image"
-              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.8, ease: 'easeOut' }}
             >
               {imgOk ? (
-                <motion.img
-                  src="/images/manish-cartoon.png"
-                  alt="Manish Kumar"
-                  onError={() => setImgOk(false)}
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-                />
+                <div className="portrait-avatar-wrapper">
+                  <motion.img
+                    src="/images/watereye-avatar.png"
+                    alt="Water Eye — YouTube Thumbnail Designer"
+                    onError={() => setImgOk(false)}
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                    className="portrait-avatar-img"
+                  />
+                  <div className="portrait-avatar-ring" aria-hidden="true" />
+                </div>
               ) : (
-                <div className="portrait-fallback">MK</div>
+                <div className="portrait-fallback">WE</div>
               )}
             </motion.div>
 
-            {/* Stats badge — bottom right */}
+            {/* Floating Thumbnail Card 1 — Top Right */}
+            <motion.div
+              className="hero-float-card hero-float-card--top"
+              initial={{ opacity: 0, x: 25, y: -15, rotate: 6 }}
+              animate={{ opacity: 1, x: 0, y: 0, rotate: 4 }}
+              transition={{ delay: 0.85, duration: 0.6 }}
+              onClick={() => onNavigate('work')}
+            >
+              <img
+                src="/samples/Watereye-1.webp"
+                alt="Minecraft PvP Thumbnail Preview"
+                loading="eager"
+              />
+              <span className="hero-float-label">BEST PACK? 500K</span>
+            </motion.div>
+
+            {/* Floating Thumbnail Card 2 — Bottom Left */}
+            <motion.div
+              className="hero-float-card hero-float-card--bottom"
+              initial={{ opacity: 0, x: -25, y: 15, rotate: -6 }}
+              animate={{ opacity: 1, x: 0, y: 0, rotate: -5 }}
+              transition={{ delay: 0.95, duration: 0.6 }}
+              onClick={() => onNavigate('work')}
+            >
+              <img
+                src="/samples/Watereye (2).png"
+                alt="3D Minecraft Character Movement Thumbnail Preview"
+                loading="eager"
+              />
+              <span className="hero-float-label">3D MOVEMENT</span>
+            </motion.div>
+
+            {/* Turnaround Badge */}
             <motion.div
               className="portrait-badge"
               initial={{ opacity: 0, y: 20, rotate: 6 }}
               animate={{ opacity: 1, y: 0, rotate: 3 }}
               transition={{ delay: 0.85 }}
             >
-              <div className="badge-num">3<span>+</span></div>
-              <div className="badge-lbl">Years<br/>coding</div>
+              <div className="badge-num">24<span>h</span></div>
+              <div className="badge-lbl">Fast<br/>delivery</div>
             </motion.div>
 
-            {/* Stats badge — bottom left */}
+            {/* Quality Badge */}
             <motion.div
               className="portrait-badge portrait-badge--alt"
               initial={{ opacity: 0, y: 20, rotate: -8 }}
-              animate={{ opacity: 1, y: 0, rotate: -5 }}
+              animate={{ opacity: 1, y: 0, rotate: -4 }}
               transition={{ delay: 0.95 }}
             >
-              <div className="badge-num">500<span>+</span></div>
-              <div className="badge-lbl">DSA<br/>solved</div>
+              <div className="badge-num">100<span>%</span></div>
+              <div className="badge-lbl">PSD<br/>source</div>
             </motion.div>
           </div>
         </div>
