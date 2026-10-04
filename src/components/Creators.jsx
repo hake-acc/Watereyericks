@@ -74,7 +74,7 @@ const CREATORS = [
     subscribers: '512K',
     youtubeUrl: 'https://youtube.com/@justapepper?si=3OVvuvt9Mjv5BRSs',
     handle: '@justapepper',
-    avatar: '/creators/pepper.webp',
+    avatar: '/creators/pepper_channel.webp',
   },
   {
     id: 'unsortedguy',
@@ -106,7 +106,7 @@ const CREATORS = [
     subscribers: '324K',
     youtubeUrl: 'https://www.youtube.com/@bulky',
     handle: '@bulky',
-    avatar: '/creators/bulky.webp',
+    avatar: '/creators/bulky_channel.webp',
   },
   {
     id: 'notrexy',
@@ -120,9 +120,9 @@ const CREATORS = [
     id: 'mitsuhagaming',
     name: 'Mitsuha Gaming',
     subscribers: '123K',
-    youtubeUrl: 'https://www.youtube.com/@mitsuhagaming',
-    handle: '@mitsuhagaming',
-    avatar: '/creators/mitsuhagaming.webp',
+    youtubeUrl: 'https://youtube.com/@mitsuha_gaming?si=hhSJdXHPCIp-smn8',
+    handle: '@mitsuha_gaming',
+    avatar: '/creators/mitsuha_gaming.webp',
   },
   {
     id: 'aadmiplays',
@@ -130,7 +130,7 @@ const CREATORS = [
     subscribers: '73.5K',
     youtubeUrl: 'https://www.youtube.com/@aadmiiplays',
     handle: '@aadmiiplays',
-    avatar: '/creators/aadmiplays.webp',
+    avatar: '/creators/aadmiplays_channel.webp',
   },
   {
     id: 'iskevin',
@@ -146,7 +146,7 @@ const CREATORS = [
     subscribers: '34.9K',
     youtubeUrl: 'https://youtube.com/@livingextraop?si=FpXr3eGi0LfbW8eK',
     handle: '@livingextraop',
-    avatar: '/creators/livingextra.webp',
+    avatar: '/creators/livingextra_op.webp',
   },
   {
     id: 'palmzy',
@@ -162,7 +162,7 @@ const CREATORS = [
     subscribers: '22.8K',
     youtubeUrl: 'https://www.youtube.com/@definitelydeadyt',
     handle: '@definitelydeadyt',
-    avatar: '/creators/definitelydeadyt.webp',
+    avatar: '/creators/definitelydead_tv.webp',
   },
   {
     id: 'camel27',
@@ -170,7 +170,7 @@ const CREATORS = [
     subscribers: '18.3K',
     youtubeUrl: 'https://www.youtube.com/channel/UCk4WYUDThO4RuSfFR-CmKfw',
     handle: '@Camel27_YT',
-    avatar: '/creators/camel27.webp',
+    avatar: '/creators/camel27_channel.webp',
   },
   {
     id: 'eltro',
@@ -178,7 +178,7 @@ const CREATORS = [
     subscribers: '10.4K',
     youtubeUrl: 'https://www.youtube.com/@elastromc',
     handle: '@elastromc',
-    avatar: '/creators/eltro.webp',
+    avatar: '/creators/eltro_mc.webp',
   },
   {
     id: 'milanzonderq',
