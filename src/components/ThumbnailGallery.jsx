@@ -457,7 +457,8 @@ export default function ThumbnailGallery() {
   const [activeModal, setActiveModal] = useState(null);
 
   const filtered = useMemo(() => {
-    if (selectedCat === 'All') return THUMBNAILS;
+    // Exclude featured thumbnail from the grid on 'All' view since it is already showcased above
+    if (selectedCat === 'All') return THUMBNAILS.filter((t) => !t.featured);
     if (selectedCat === 'Minecraft') return THUMBNAILS.filter((t) => t.category === 'Minecraft');
     if (selectedCat === 'Cobblemon') return THUMBNAILS.filter((t) => t.subcat === 'Cobblemon');
     if (selectedCat === 'Boss Battles') return THUMBNAILS.filter((t) => t.subcat === 'Boss Battles');

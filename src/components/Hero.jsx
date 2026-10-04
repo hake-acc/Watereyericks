@@ -194,11 +194,11 @@ export default function Hero({ onNavigate }) {
               onClick={() => onNavigate('work')}
             >
               <img
-                src="/samples/sample-01-mega-garchomp.webp"
-                alt="100 Days Cobblemon Mega Garchomp Thumbnail Preview"
+                src="/samples/sample-19-primal-groudon.webp"
+                alt="100 Days Cobblemon Primal Groudon Thumbnail Preview"
                 loading="eager"
               />
-              <span className="hero-float-label">100 DAYS COBBLEMON</span>
+              <span className="hero-float-label">PRIMAL GROUDON</span>
             </motion.div>
 
             {/* Floating Thumbnail Card 2 — Bottom Left */}
