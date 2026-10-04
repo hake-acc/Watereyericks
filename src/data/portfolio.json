@@ -1,7 +1,27 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-10-04T17:30:09.941Z",
+  "updatedAt": "2026-10-04T17:46:34.653Z",
   "thumbnails": [
+    {
+      "id": "we-muu44i8b",
+      "type": "thumbnail",
+      "name": "Evyn Bot",
+      "title": "Evyn Bot",
+      "subtitle": "Greeny Lush Show Case",
+      "category": "Minecraft",
+      "subcat": "Fun Games",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D",
+        "Blender",
+        "After Effects"
+      ],
+      "image": "/thumbnails/normal/thumb-evyn-bot-muu44i8b-mljc.png",
+      "img": "/thumbnails/normal/thumb-evyn-bot-muu44i8b-mljc.png",
+      "width": 1679,
+      "height": 937,
+      "createdAt": "2026-10-04T17:46:34.187Z"
+    },
     {
       "id": "we-01",
       "type": "thumbnail",
