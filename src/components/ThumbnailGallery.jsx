@@ -192,6 +192,18 @@ export default function ThumbnailGallery() {
     setActiveModal(null);
   }, []);
 
+  // Keyboard accessibility: Close modal on Escape key
+  React.useEffect(() => {
+    if (!activeModal) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeModal, handleCloseModal]);
+
   return (
     <section id="work" className="section work-section">
       <div className="section-title">
