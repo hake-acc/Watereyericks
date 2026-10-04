@@ -98,6 +98,28 @@
   flex-direction: column;
   gap: 6px;
 }
+.admin-field-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-counter-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+.admin-counter-pill.valid {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
 .admin-field label {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -120,6 +142,24 @@
 }
 .admin-input-wrap input {
   padding-left: 40px !important;
+  padding-right: 40px !important;
+}
+.admin-pw-toggle-btn {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s;
+}
+.admin-pw-toggle-btn:hover {
+  color: var(--ink);
 }
 
 .admin-field input,

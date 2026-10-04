@@ -7,3 +7,4 @@ dist-ssr
 .DS_Store
 .agents
 skills-lock.json
+*.tmp

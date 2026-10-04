@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(admin|api/admin)(.*)",
+      "source": "/(owner-we-8f2c7a1e5d9b4c3f|api/admin)(.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",
@@ -41,13 +41,25 @@
       ]
     }
   ],
-  "rewrites": [
+  "redirects": [
     {
       "source": "/admin",
-      "destination": "/index.html"
+      "destination": "/",
+      "permanent": false
     },
     {
       "source": "/admin/:path*",
+      "destination": "/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/owner-we-8f2c7a1e5d9b4c3f",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/owner-we-8f2c7a1e5d9b4c3f/:path*",
       "destination": "/index.html"
     }
   ]

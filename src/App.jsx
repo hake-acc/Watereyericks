@@ -13,22 +13,32 @@ const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard.jsx'
 
 const SECTIONS = ['home', 'work', 'creators', 'services', 'about', 'contact'];
 
+const ADMIN_ROUTE = '/owner-we-8f2c7a1e5d9b4c3f';
+
 export default function App() {
   const [isAdmin, setIsAdmin] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return window.location.pathname.startsWith('/admin');
+    return window.location.pathname.startsWith(ADMIN_ROUTE);
   });
 
   const [active, setActive] = useState('home');
   const [theme, setTheme] = useState(() => localStorage.getItem('we-theme') || 'dark');
 
-  // Handle client-side URL changes for private /admin route
+  // Handle client-side URL changes for private route
   useEffect(() => {
     const handlePopState = () => {
-      setIsAdmin(window.location.pathname.startsWith('/admin'));
+      setIsAdmin(window.location.pathname.startsWith(ADMIN_ROUTE));
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Hardened route protection: Redirect any legacy /admin requests to home
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
+      window.history.replaceState({}, '', '/');
+      setIsAdmin(false);
+    }
   }, []);
 
   const navigateHome = useCallback(() => {

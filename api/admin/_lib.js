@@ -6,11 +6,10 @@ const GITHUB_OWNER = process.env.GITHUB_OWNER || 'hake-acc';
 const GITHUB_REPO = process.env.GITHUB_REPO || 'Watereyericks';
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-// Fallback hash if environment variable is unset
-const ADMIN_PASSWORD_HASH =
-  process.env.ADMIN_PASSWORD_HASH ||
-  'fc613b4dfd6736a7bd268c8a0e74ed0d1c04a959f59dd74ef2874983fd443fc9';
+// Critical credentials loaded strictly from secure environment variables.
+// NO FALLBACKS: If unset, server fails closed and rejects authentication.
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
 
 const SESSION_SECRET =
   process.env.SESSION_SECRET || 'watereye-secure-session-secret-key-32chars';
@@ -19,6 +18,77 @@ const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID;
 
 const COOKIE_NAME = 'we_admin_session';
+
+// =========================================================
+// RATE LIMITING & BRUTE-FORCE PROTECTION
+// =========================================================
+const loginAttempts = new Map();
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15-minute IP lockout
+
+/**
+ * Extracts the real client IP address from request headers.
+ */
+export function getClientIp(req) {
+  const forwarded = req.headers?.['x-forwarded-for'];
+  if (forwarded && typeof forwarded === 'string') {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.headers?.['x-real-ip'] || req.socket?.remoteAddress || 'unknown-ip';
+}
+
+/**
+ * Checks if the client IP is currently rate-limited or locked out.
+ */
+export function checkRateLimit(ip) {
+  const now = Date.now();
+  const record = loginAttempts.get(ip);
+  if (!record) return { allowed: true, remaining: MAX_FAILED_ATTEMPTS };
+
+  // Check if IP is in active lockout
+  if (record.lockUntil && now < record.lockUntil) {
+    const remainingMins = Math.ceil((record.lockUntil - now) / 60000);
+    return {
+      allowed: false,
+      lockout: true,
+      remainingMins,
+      message: `Too many failed login attempts. IP locked for ${remainingMins} minute(s).`,
+    };
+  }
+
+  // Auto-reset if the last attempt was before the lockout window
+  if (record.lastAttempt && now - record.lastAttempt > LOCKOUT_DURATION_MS) {
+    loginAttempts.delete(ip);
+    return { allowed: true, remaining: MAX_FAILED_ATTEMPTS };
+  }
+
+  return {
+    allowed: true,
+    remaining: Math.max(0, MAX_FAILED_ATTEMPTS - record.attempts),
+  };
+}
+
+/**
+ * Records a failed login attempt for the client IP.
+ */
+export function recordFailedLogin(ip) {
+  const now = Date.now();
+  const record = loginAttempts.get(ip) || { attempts: 0, lockUntil: 0, lastAttempt: now };
+  record.attempts += 1;
+  record.lastAttempt = now;
+
+  if (record.attempts >= MAX_FAILED_ATTEMPTS) {
+    record.lockUntil = now + LOCKOUT_DURATION_MS;
+  }
+  loginAttempts.set(ip, record);
+}
+
+/**
+ * Resets failed login attempts for an authenticated client IP.
+ */
+export function resetLoginAttempts(ip) {
+  loginAttempts.delete(ip);
+}
 
 /**
  * Parses HTTP cookies from request headers.
@@ -97,24 +167,47 @@ export function authenticateAdmin(req, res) {
 
 /**
  * Constant-time comparison for login credentials.
+ * Enforces strict length requirements:
+ * - Username / Owner ID: exactly 128 characters
+ * - Password: exactly 209 characters
+ * - Server configuration must be present; otherwise fails closed immediately.
  */
 export function verifyCredentials(username, password) {
-  if (!username || !password) return false;
-
-  const userBuf = Buffer.from(username);
-  const expUserBuf = Buffer.from(ADMIN_USERNAME);
-  if (userBuf.length !== expUserBuf.length || !crypto.timingSafeEqual(userBuf, expUserBuf)) {
+  // FAIL-CLOSED: Ensure server secrets are configured
+  if (!ADMIN_USERNAME || !ADMIN_PASSWORD_HASH) {
+    console.error('CRITICAL: Server authentication secrets are unconfigured. Rejecting login.');
     return false;
   }
 
-  const passHash = crypto.createHash('sha256').update(password).digest('hex');
-  const hashBuf = Buffer.from(passHash);
-  const expHashBuf = Buffer.from(ADMIN_PASSWORD_HASH);
-  if (hashBuf.length !== expHashBuf.length || !crypto.timingSafeEqual(hashBuf, expHashBuf)) {
+  // Strict length validation
+  if (typeof username !== 'string' || username.length !== 128) {
+    return false;
+  }
+  if (typeof password !== 'string' || password.length !== 209) {
     return false;
   }
 
-  return true;
+  try {
+    // Constant-time username comparison
+    const userBuf = Buffer.from(username, 'utf8');
+    const expUserBuf = Buffer.from(ADMIN_USERNAME, 'utf8');
+    if (userBuf.length !== expUserBuf.length || !crypto.timingSafeEqual(userBuf, expUserBuf)) {
+      return false;
+    }
+
+    // Constant-time password hash comparison
+    const passHash = crypto.createHash('sha256').update(password, 'utf8').digest('hex');
+    const hashBuf = Buffer.from(passHash, 'utf8');
+    const expHashBuf = Buffer.from(ADMIN_PASSWORD_HASH, 'utf8');
+    if (hashBuf.length !== expHashBuf.length || !crypto.timingSafeEqual(hashBuf, expHashBuf)) {
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Credential verification error:', err);
+    return false;
+  }
 }
 
 /**
