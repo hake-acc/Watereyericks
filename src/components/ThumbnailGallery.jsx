@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Maximize2, X, Sparkles } from 'lucide-react';
 import Tape from './Tape.jsx';
 import Doodle from './Doodle.jsx';
+import BeforeAfterSection from './ComparisonSlider.jsx';
 
 // 49 Curated Production Thumbnails by Water Eye
 const THUMBNAILS = [
@@ -107,15 +108,6 @@ const THUMBNAILS = [
     img: '/samples/sample-11-ice-cavern-stargate.webp',
   },
   {
-    id: 'we-12',
-    title: 'Minecraft Feudal: Demon Samurai & Dragon',
-    subtitle: 'Crimson demon unsheathing katana with purple winding dragon',
-    category: 'Minecraft',
-    subcat: 'SMP & Adventure',
-    tools: ['Photoshop', 'Cinema 4D'],
-    img: '/samples/sample-12-feudal-demon-samurai.webp',
-  },
-  {
     id: 'we-13',
     title: '100 Days TNT Nuke Stronghold',
     subtitle: 'Massive atomic TNT mushroom cloud obliterating stone stronghold',
@@ -123,15 +115,6 @@ const THUMBNAILS = [
     subcat: 'SMP & Adventure',
     tools: ['Photoshop', 'Cinema 4D'],
     img: '/samples/sample-13-fortress-tnt-nuke.webp',
-  },
-  {
-    id: 'we-14',
-    title: 'The Casket of Reveries: Titan Concept',
-    subtitle: 'Ancient rune titan golem color study',
-    category: 'Minecraft',
-    subcat: 'Boss Battles',
-    tools: ['Photoshop', 'Digital Painting'],
-    img: '/samples/sample-14-casket-of-reveries-study.webp',
   },
   {
     id: 'we-15',
@@ -621,6 +604,9 @@ export default function ThumbnailGallery() {
           </motion.div>
         ))}
       </div>
+
+      {/* Before & After Thumbnail Comparison Subsection */}
+      <BeforeAfterSection />
 
       {/* Lightbox Inspection Modal */}
       <AnimatePresence>

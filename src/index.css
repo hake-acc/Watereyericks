@@ -1168,6 +1168,229 @@ body::before {
   color: var(--muted);
 }
 
+/* =====================================================================
+   BEFORE & AFTER COMPARISON SUBSECTION
+   ===================================================================== */
+.before-after-section {
+  margin-top: 55px;
+  padding-top: 45px;
+  border-top: 1px dashed var(--line);
+}
+.before-after-header {
+  margin-bottom: 28px;
+}
+.before-after-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--purple-soft);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.before-after-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+.before-after-subtitle {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 650px;
+  line-height: 1.5;
+  margin: 0;
+}
+.before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+.comparison-card {
+  position: relative;
+  background: var(--paper-light);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  padding: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.comparison-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--purple-soft);
+}
+.comparison-card:focus-within {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+}
+.comparison-media-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  user-select: none;
+  touch-action: pan-y;
+}
+.comparison-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.comparison-clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.comparison-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ffffff;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 3;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+.comparison-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #111111;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--purple);
+  cursor: ew-resize;
+  pointer-events: none;
+}
+.comparison-arrows {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.comparison-badge {
+  position: absolute;
+  top: 10px;
+  padding: 4px 9px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  z-index: 4;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+}
+.comparison-badge--before {
+  left: 10px;
+  background: rgba(15, 17, 23, 0.8);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.comparison-badge--after {
+  right: 10px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.95), rgba(236, 72, 153, 0.95));
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.comparison-range-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 5;
+  touch-action: pan-y;
+}
+.comparison-range-input:focus-visible {
+  outline: none;
+}
+.comparison-info {
+  padding: 14px 4px 6px;
+}
+.comparison-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.comparison-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--purple-soft);
+  text-transform: uppercase;
+}
+.comparison-tools {
+  display: flex;
+  gap: 6px;
+}
+.comparison-title {
+  font-family: var(--font-hand);
+  font-size: 26px;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.comparison-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+.comparison-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  font-size: 11px;
+}
+.comparison-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  color: var(--purple-soft);
+  font-weight: 600;
+}
+.comparison-position {
+  font-family: var(--font-mono);
+  color: var(--muted);
+  font-weight: 600;
+}
+
 /* =========================================================
    CREATORS — Atmospheric Two-Layer Background System
    ========================================================= */
@@ -1775,6 +1998,7 @@ body::before {
   .qf-strip-grid { grid-template-columns: repeat(2, 1fr); }
   .qf-strip-cell:nth-child(3) { border-left: 0; padding-left: 0; }
   .thumbnail-grid { grid-template-columns: 1fr; }
+  .before-after-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .perks-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .about-grid { grid-template-columns: 1fr; }
