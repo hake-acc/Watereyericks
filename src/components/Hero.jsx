@@ -4,6 +4,7 @@ import {
   ArrowRight, Sparkles, MapPin, Mail, Youtube, ExternalLink,
   Flame, Zap, Clock
 } from 'lucide-react';
+import { SocialButtonsRow } from './SocialIcons.jsx';
 
 export default function Hero({ onNavigate }) {
   const [imgOk, setImgOk] = useState(true);
@@ -105,26 +106,7 @@ export default function Hero({ onNavigate }) {
                 Book a Thumbnail <Zap size={14} />
               </button>
               <div className="toolbar-divider" />
-              <div className="toolbar-socials">
-                <a
-                  href="mailto:watereyebusiness@gmail.com"
-                  className="social-icon"
-                  aria-label="Email Water Eye"
-                  title="Email"
-                >
-                  <Mail size={16} />
-                </a>
-                <a
-                  href="https://youtube.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="social-icon"
-                  aria-label="Water Eye YouTube"
-                  title="YouTube"
-                >
-                  <Youtube size={16} />
-                </a>
-              </div>
+              <SocialButtonsRow size={16} className="toolbar-socials" />
             </motion.div>
 
             <motion.div
