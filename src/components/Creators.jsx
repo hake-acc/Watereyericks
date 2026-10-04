@@ -144,8 +144,8 @@ const CREATORS = [
     id: 'livingextra',
     name: 'LivingExtra',
     subscribers: '34.9K',
-    youtubeUrl: 'https://www.youtube.com/@livingextra',
-    handle: '@livingextra',
+    youtubeUrl: 'https://youtube.com/@livingextraop?si=FpXr3eGi0LfbW8eK',
+    handle: '@livingextraop',
     avatar: '/creators/livingextra.webp',
   },
   {
