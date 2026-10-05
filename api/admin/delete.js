@@ -27,17 +27,26 @@ export default async function handler(req, res) {
     const itemType = type === 'slider' ? 'slider' : 'thumbnail';
     const pathsToDelete = [];
     let deletedTitle = '';
+    let alreadyRemoved = false;
 
     const commitResult = await atomicGitHubCommit({
       commitMessage: `feat(portfolio): delete ${itemType} item "${id}"`,
       pathsToDelete,
       updatePortfolio: (portfolio) => {
         if (itemType === 'slider') {
-          const comparisons = portfolio.comparisons || [];
-          const target = comparisons.find((c) => c.id === id);
+          const comparisons = Array.isArray(portfolio.comparisons) ? portfolio.comparisons : [];
+          const target = comparisons.find(
+            (c) =>
+              c.id === id ||
+              (c.title && c.title.toLowerCase() === id.toLowerCase()) ||
+              (c.name && c.name.toLowerCase() === id.toLowerCase())
+          );
+
           if (!target) {
-            throw new Error(`Comparison slider with ID "${id}" was not found.`);
+            alreadyRemoved = true;
+            return portfolio; // Item already removed; don't error out
           }
+
           deletedTitle = target.title || target.name || id;
 
           // Collect paths to delete safely
@@ -56,20 +65,37 @@ export default async function handler(req, res) {
 
           return {
             ...portfolio,
-            comparisons: comparisons.filter((c) => c.id !== id),
+            comparisons: comparisons.filter((c) => c !== target && c.id !== target.id),
           };
         } else {
-          const thumbnails = portfolio.thumbnails || [];
-          const target = thumbnails.find((t) => t.id === id);
+          const thumbnails = Array.isArray(portfolio.thumbnails) ? portfolio.thumbnails : [];
+          const target = thumbnails.find(
+            (t) =>
+              t.id === id ||
+              (t.title && t.title.toLowerCase() === id.toLowerCase()) ||
+              (t.name && t.name.toLowerCase() === id.toLowerCase()) ||
+              (t.image && t.image === id) ||
+              (t.img && t.img === id)
+          );
+
           if (!target) {
-            throw new Error(`Thumbnail with ID "${id}" was not found.`);
+            alreadyRemoved = true;
+            return portfolio; // Item already removed; don't error out
           }
+
           deletedTitle = target.title || target.name || id;
 
           const imgPath = target.image || target.img;
           if (imgPath && typeof imgPath === 'string') {
             const clean = imgPath.replace(/^\//, '');
-            // Safe deletion path verification
+            if (clean.startsWith('thumbnails/') || clean.startsWith('samples/')) {
+              pathsToDelete.push(`public/${clean}`);
+            }
+          }
+
+          const gridPath = target.gridImage;
+          if (gridPath && typeof gridPath === 'string') {
+            const clean = gridPath.replace(/^\//, '');
             if (clean.startsWith('thumbnails/') || clean.startsWith('samples/')) {
               pathsToDelete.push(`public/${clean}`);
             }
@@ -77,22 +103,35 @@ export default async function handler(req, res) {
 
           return {
             ...portfolio,
-            thumbnails: thumbnails.filter((t) => t.id !== id),
+            thumbnails: thumbnails.filter((t) => t !== target && t.id !== target.id),
           };
         }
       },
     });
+
+    // If item was already removed in GitHub, respond gracefully with the fresh portfolio
+    if (alreadyRemoved) {
+      return res.status(200).json({
+        success: true,
+        alreadyDeleted: true,
+        deletedId: id,
+        portfolio: commitResult.portfolio,
+        message: `Item was already removed from the GitHub repository. Portfolio view has been synchronized.`,
+      });
+    }
 
     // Trigger Vercel deployment
     const deployResult = await triggerVercelDeploy();
 
     return res.status(200).json({
       success: true,
+      alreadyDeleted: false,
       deletedId: id,
       deletedTitle,
       commitSha: commitResult.commitSha,
       deployTriggered: deployResult.triggered,
-      message: `Deleted "${deletedTitle}" successfully. Deployment triggered.`,
+      portfolio: commitResult.portfolio,
+      message: `Deleted "${deletedTitle}" successfully. Live deployment triggered.`,
     });
   } catch (err) {
     console.error('Delete error:', err);

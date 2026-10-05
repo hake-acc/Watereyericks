@@ -1,4 +1,6 @@
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 
 // Configuration loaded from secure environment variables
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -341,11 +343,10 @@ export function validateImage(buffer, label = 'Image') {
 
   // Aspect ratio check for YouTube 16:9 thumbnail format (~1.777)
   const ratio = width / height;
-  const targetRatio = 16 / 9; // ~1.7778
-  // Allow modest variation between 1.55 and 1.95 for design flexibility, but prevent square (1.0), vertical (0.56), or extreme banners
-  if (ratio < 1.55 || ratio > 1.95) {
+  // Allow flexible ratio between 1.40 and 2.10 to accommodate diverse banner and game formats
+  if (ratio < 1.40 || ratio > 2.10) {
     throw new Error(
-      `${label}: Incorrect aspect ratio (${ratio.toFixed(2)}:1). Thumbnails must be approximately 16:9 (~1.78:1) to prevent feed distortion.`
+      `${label}: Aspect ratio (${ratio.toFixed(2)}:1) is outside recommended range (16:9 ~ 1.78:1). Recommended: 1280x720 or 1920x1080.`
     );
   }
 
@@ -451,11 +452,35 @@ export async function atomicGitHubCommit({
           currentPortfolio = JSON.parse(raw);
         }
       } catch (err) {
-        console.warn('Warning: Could not fetch portfolio.json from GitHub, using default base.', err.message);
+        console.warn('Warning: Could not fetch portfolio.json from GitHub, using local fallback:', err.message);
+        try {
+          const localPath = path.join(process.cwd(), 'src', 'data', 'portfolio.json');
+          if (fs.existsSync(localPath)) {
+            currentPortfolio = JSON.parse(fs.readFileSync(localPath, 'utf8'));
+          }
+        } catch {
+          // ignore
+        }
       }
 
       // 4. Update the portfolio in memory using the caller's callback
       const updatedPortfolio = await updatePortfolio(currentPortfolio);
+
+      // Check if any actual modifications occurred
+      const noFileChanges = filesToAdd.length === 0 && pathsToDelete.length === 0;
+      const jsonUnchanged =
+        JSON.stringify(updatedPortfolio.thumbnails) === JSON.stringify(currentPortfolio.thumbnails) &&
+        JSON.stringify(updatedPortfolio.comparisons) === JSON.stringify(currentPortfolio.comparisons);
+
+      if (noFileChanges && jsonUnchanged) {
+        return {
+          success: true,
+          noChanges: true,
+          commitSha: latestCommitSha,
+          portfolio: currentPortfolio,
+        };
+      }
+
       updatedPortfolio.updatedAt = new Date().toISOString();
 
       // 5. Upload blobs for all added files

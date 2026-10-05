@@ -77,18 +77,23 @@ export default function AdminDashboard({ onNavigateHome }) {
     checkAuth();
   }, [checkAuth]);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   // Load portfolio from API or fallback
   const loadPortfolio = async () => {
+    setIsRefreshing(true);
     try {
-      const resp = await fetch('/api/admin/portfolio');
+      const resp = await fetch(`/api/admin/portfolio?_t=${Date.now()}`);
       if (resp.ok) {
         const data = await resp.json();
-        if (data && (data.thumbnails || data.comparisons)) {
+        if (data && (Array.isArray(data.thumbnails) || Array.isArray(data.comparisons))) {
           setPortfolio(data);
         }
       }
     } catch (err) {
       console.warn('Using bundled portfolio data fallback:', err);
+    } finally {
+      setIsRefreshing(false);
     }
   };
 
@@ -122,14 +127,32 @@ export default function AdminDashboard({ onNavigateHome }) {
     setAuthState({ checking: false, authenticated: false, user: null });
   };
 
-  const handleItemPublished = (newItem) => {
+  const handleItemPublished = (newItem, updatedPortfolio) => {
+    if (updatedPortfolio && Array.isArray(updatedPortfolio.thumbnails)) {
+      setPortfolio(updatedPortfolio);
+    } else if (newItem) {
+      setPortfolio((prev) => {
+        if (newItem.type === 'slider') {
+          return { ...prev, comparisons: [newItem, ...(prev.comparisons || [])] };
+        }
+        return { ...prev, thumbnails: [newItem, ...(prev.thumbnails || [])] };
+      });
+    }
     loadPortfolio();
     pollDeployStatus();
-    // Temporary set status to building/queued
     setDeployStatus({ status: 'BUILDING', lastChecked: Date.now() });
   };
 
-  const handleItemDeleted = (deletedId) => {
+  const handleItemDeleted = (deletedId, updatedPortfolio) => {
+    if (updatedPortfolio && Array.isArray(updatedPortfolio.thumbnails)) {
+      setPortfolio(updatedPortfolio);
+    } else {
+      setPortfolio((prev) => ({
+        ...prev,
+        thumbnails: (prev.thumbnails || []).filter((t) => t.id !== deletedId),
+        comparisons: (prev.comparisons || []).filter((c) => c.id !== deletedId),
+      }));
+    }
     loadPortfolio();
     pollDeployStatus();
     setDeployStatus({ status: 'BUILDING', lastChecked: Date.now() });
@@ -272,7 +295,12 @@ export default function AdminDashboard({ onNavigateHome }) {
 
         {/* Content Management Grid for Thumbnails (hidden on creators tab) */}
         {activeTab !== 'creators' && (
-          <PortfolioList portfolio={portfolio} onDeleted={handleItemDeleted} />
+          <PortfolioList
+            portfolio={portfolio}
+            onDeleted={handleItemDeleted}
+            onRefreshLive={loadPortfolio}
+            isRefreshing={isRefreshing}
+          />
         )}
       </main>
     </div>

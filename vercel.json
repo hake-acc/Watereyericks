@@ -62,5 +62,10 @@
       "source": "/owner-we-8f2c7a1e5d9b4c3f/:path*",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/admin/*.js": {
+      "maxDuration": 30
+    }
+  }
 }

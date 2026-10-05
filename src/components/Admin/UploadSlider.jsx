@@ -1,15 +1,29 @@
 import React, { useState, useRef } from 'react';
-import { Sliders, UploadCloud, CheckCircle, AlertCircle, X, Sparkles } from 'lucide-react';
+import {
+  Sliders,
+  UploadCloud,
+  CheckCircle,
+  AlertCircle,
+  X,
+  Sparkles,
+  Zap,
+  RefreshCw,
+} from 'lucide-react';
 import Tape from '../Tape.jsx';
+import { optimizeImageForUpload, formatBytes } from './imageOptimizer.js';
 
 export default function UploadSlider({ onPublished }) {
   const [beforeFile, setBeforeFile] = useState(null);
   const [beforePreview, setBeforePreview] = useState('');
   const [beforeBase64, setBeforeBase64] = useState('');
+  const [beforeMeta, setBeforeMeta] = useState(null);
+  const [processingBefore, setProcessingBefore] = useState(false);
 
   const [afterFile, setAfterFile] = useState(null);
   const [afterPreview, setAfterPreview] = useState('');
   const [afterBase64, setAfterBase64] = useState('');
+  const [afterMeta, setAfterMeta] = useState(null);
+  const [processingAfter, setProcessingAfter] = useState(false);
 
   const [sliderPos, setSliderPos] = useState(50);
 
@@ -27,46 +41,40 @@ export default function UploadSlider({ onPublished }) {
   const beforeInputRef = useRef(null);
   const afterInputRef = useRef(null);
 
-  const handleBeforeFile = (e) => {
+  const handleBeforeFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    loadBefore(file);
-  };
-
-  const handleAfterFile = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    loadAfter(file);
-  };
-
-  const loadBefore = (file) => {
     setError(null);
-    if (!['image/webp', 'image/jpeg', 'image/jpg', 'image/png'].includes(file.type.toLowerCase())) {
-      setError('Before Image: Please choose a valid image (.webp, .jpg, .png).');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setBeforePreview(reader.result);
-      setBeforeBase64(reader.result);
+    setProcessingBefore(true);
+    try {
+      const opt = await optimizeImageForUpload(file, { maxWidth: 1920, maxHeight: 1080 });
+      setBeforePreview(opt.dataUrl);
+      setBeforeBase64(opt.base64);
+      setBeforeMeta(opt);
       setBeforeFile(file);
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      setError(`Before Image: ${err.message}`);
+    } finally {
+      setProcessingBefore(false);
+    }
   };
 
-  const loadAfter = (file) => {
+  const handleAfterFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
     setError(null);
-    if (!['image/webp', 'image/jpeg', 'image/jpg', 'image/png'].includes(file.type.toLowerCase())) {
-      setError('After Image: Please choose a valid image (.webp, .jpg, .png).');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setAfterPreview(reader.result);
-      setAfterBase64(reader.result);
+    setProcessingAfter(true);
+    try {
+      const opt = await optimizeImageForUpload(file, { maxWidth: 1920, maxHeight: 1080 });
+      setAfterPreview(opt.dataUrl);
+      setAfterBase64(opt.base64);
+      setAfterMeta(opt);
       setAfterFile(file);
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      setError(`After Image: ${err.message}`);
+    } finally {
+      setProcessingAfter(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -87,7 +95,7 @@ export default function UploadSlider({ onPublished }) {
     setError(null);
     setSuccessResult(null);
     setLoading(true);
-    setStatusMsg('1/3: Validating both images and aspect ratios...');
+    setStatusMsg('1/3: Preparing optimized comparison assets...');
 
     try {
       setStatusMsg('2/3: Creating Git tree with Before & After assets on GitHub...');
@@ -122,16 +130,18 @@ export default function UploadSlider({ onPublished }) {
       setBeforeFile(null);
       setBeforePreview('');
       setBeforeBase64('');
+      setBeforeMeta(null);
       setAfterFile(null);
       setAfterPreview('');
       setAfterBase64('');
+      setAfterMeta(null);
       setName('');
       setSubtitle('');
       setDescription('');
 
-      if (onPublished) onPublished(data.item);
+      if (onPublished) onPublished(data.item, data.portfolio);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to upload comparison slider.');
     } finally {
       setLoading(false);
       setStatusMsg('');
@@ -164,7 +174,7 @@ export default function UploadSlider({ onPublished }) {
         <div className="admin-alert admin-alert--success" role="alert">
           <CheckCircle size={18} />
           <div className="success-content">
-            <strong>Published slider successfully to GitHub!</strong>
+            <strong>Published slider successfully!</strong>
             <p>"{successResult.title}" committed to main ({successResult.commitSha?.substring(0, 7)}).</p>
             <span className="deploy-pill">⟳ Vercel automatic deployment triggered</span>
           </div>
@@ -172,14 +182,14 @@ export default function UploadSlider({ onPublished }) {
       )}
 
       <form onSubmit={handleSubmit} className="admin-form">
-        {/* Dual Upload Section */}
-        <div className="slider-dual-upload">
-          {/* BEFORE SLOT */}
-          <div className="slider-upload-col">
-            <span className="slider-slot-badge slider-slot-badge--before">BEFORE (Initial Concept)</span>
+        {/* Dual Upload Grid */}
+        <div className="slider-upload-grid">
+          {/* Before Image */}
+          <div className="slider-slot">
+            <h4 className="slider-slot-title">1. Before (Original / Concept)</h4>
             {!beforePreview ? (
               <div
-                className="admin-dropzone admin-dropzone--compact"
+                className="admin-dropzone mini-dropzone"
                 onClick={() => beforeInputRef.current?.click()}
               >
                 <input
@@ -189,34 +199,54 @@ export default function UploadSlider({ onPublished }) {
                   accept=".webp,.jpg,.jpeg,.png"
                   style={{ display: 'none' }}
                 />
-                <UploadCloud size={28} />
-                <span className="dropzone-slot-label">Select Before Image</span>
+                <div className="dropzone-icon">
+                  {processingBefore ? <RefreshCw size={24} className="spin" /> : <UploadCloud size={24} />}
+                </div>
+                <span className="dropzone-primary">
+                  {processingBefore ? 'Optimizing...' : 'Select Before Image'}
+                </span>
+                <span className="dropzone-sub">WebP, JPG, PNG (1080p WebP auto-optimized)</span>
               </div>
             ) : (
-              <div className="slot-preview-box">
-                <img src={beforePreview} alt="Before preview" className="slot-preview-img" />
-                <button
-                  type="button"
-                  className="preview-remove-btn"
-                  onClick={() => {
-                    setBeforePreview('');
-                    setBeforeBase64('');
-                    setBeforeFile(null);
-                  }}
-                  aria-label="Remove before image"
-                >
-                  <X size={14} />
-                </button>
+              <div className="admin-preview-wrap mini-preview">
+                <div className="preview-media-container">
+                  <img src={beforePreview} alt="Before preview" className="preview-image" />
+                  <button
+                    type="button"
+                    className="preview-remove-btn"
+                    onClick={() => {
+                      setBeforePreview('');
+                      setBeforeBase64('');
+                      setBeforeFile(null);
+                      setBeforeMeta(null);
+                    }}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+                {beforeMeta && (
+                  <div className="meta-badge-row" style={{ fontSize: '11px', marginTop: '4px', color: '#10b981', display: 'flex', gap: '6px' }}>
+                    <span>{beforeMeta.width}×{beforeMeta.height}</span>
+                    <span>• {formatBytes(beforeMeta.optimizedSize)}</span>
+                  </div>
+                )}
               </div>
             )}
+            <input
+              type="text"
+              value={beforeLabel}
+              onChange={(e) => setBeforeLabel(e.target.value)}
+              placeholder="e.g. BEFORE (Rough Draft)"
+              className="slot-label-input"
+            />
           </div>
 
-          {/* AFTER SLOT */}
-          <div className="slider-upload-col">
-            <span className="slider-slot-badge slider-slot-badge--after">AFTER (Final Polish)</span>
+          {/* After Image */}
+          <div className="slider-slot">
+            <h4 className="slider-slot-title">2. After (Final Polish)</h4>
             {!afterPreview ? (
               <div
-                className="admin-dropzone admin-dropzone--compact"
+                className="admin-dropzone mini-dropzone"
                 onClick={() => afterInputRef.current?.click()}
               >
                 <input
@@ -226,42 +256,63 @@ export default function UploadSlider({ onPublished }) {
                   accept=".webp,.jpg,.jpeg,.png"
                   style={{ display: 'none' }}
                 />
-                <UploadCloud size={28} />
-                <span className="dropzone-slot-label">Select After Image</span>
+                <div className="dropzone-icon">
+                  {processingAfter ? <RefreshCw size={24} className="spin" /> : <UploadCloud size={24} />}
+                </div>
+                <span className="dropzone-primary">
+                  {processingAfter ? 'Optimizing...' : 'Select After Image'}
+                </span>
+                <span className="dropzone-sub">WebP, JPG, PNG (1080p WebP auto-optimized)</span>
               </div>
             ) : (
-              <div className="slot-preview-box">
-                <img src={afterPreview} alt="After preview" className="slot-preview-img" />
-                <button
-                  type="button"
-                  className="preview-remove-btn"
-                  onClick={() => {
-                    setAfterPreview('');
-                    setAfterBase64('');
-                    setAfterFile(null);
-                  }}
-                  aria-label="Remove after image"
-                >
-                  <X size={14} />
-                </button>
+              <div className="admin-preview-wrap mini-preview">
+                <div className="preview-media-container">
+                  <img src={afterPreview} alt="After preview" className="preview-image" />
+                  <button
+                    type="button"
+                    className="preview-remove-btn"
+                    onClick={() => {
+                      setAfterPreview('');
+                      setAfterBase64('');
+                      setAfterFile(null);
+                      setAfterMeta(null);
+                    }}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+                {afterMeta && (
+                  <div className="meta-badge-row" style={{ fontSize: '11px', marginTop: '4px', color: '#10b981', display: 'flex', gap: '6px' }}>
+                    <span>{afterMeta.width}×{afterMeta.height}</span>
+                    <span>• {formatBytes(afterMeta.optimizedSize)}</span>
+                  </div>
+                )}
               </div>
             )}
+            <input
+              type="text"
+              value={afterLabel}
+              onChange={(e) => setAfterLabel(e.target.value)}
+              placeholder="e.g. AFTER (Final Composition)"
+              className="slot-label-input"
+            />
           </div>
         </div>
 
-        {/* Live Interactive Slider Preview if both images are present */}
+        {/* Live Interactive Preview if both are loaded */}
         {beforePreview && afterPreview && (
-          <div className="slider-live-preview-wrap">
-            <span className="preview-heading">Interactive Preview:</span>
-            <div className="comparison-media-wrap comparison-media-wrap--preview">
-              <img src={afterPreview} alt="After Preview" className="comparison-img comparison-img--after" />
-              <div className="comparison-clip" style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}>
-                <img src={beforePreview} alt="Before Preview" className="comparison-img comparison-img--before" />
-              </div>
-              <div className="comparison-divider" style={{ left: `${sliderPos}%` }}>
-                <div className="comparison-handle" aria-hidden="true">
-                  <span className="comparison-arrows">⟨ ⟩</span>
+          <div className="slider-interactive-preview">
+            <h4 className="preview-heading">Interactive Split Preview</h4>
+            <div className="mini-slider-wrap">
+              <div className="mini-slider-container">
+                <img src={afterPreview} alt="After" className="mini-slider-img" />
+                <div
+                  className="mini-slider-clipped"
+                  style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
+                >
+                  <img src={beforePreview} alt="Before" className="mini-slider-img" />
                 </div>
+                <div className="mini-slider-line" style={{ left: `${sliderPos}%` }} />
               </div>
               <input
                 type="range"
@@ -269,23 +320,22 @@ export default function UploadSlider({ onPublished }) {
                 max="100"
                 value={sliderPos}
                 onChange={(e) => setSliderPos(Number(e.target.value))}
-                className="comparison-range"
-                aria-label="Interactive comparison preview slider"
+                className="mini-slider-range"
               />
             </div>
           </div>
         )}
 
-        {/* Fields */}
+        {/* Metadata Fields */}
         <div className="admin-form-grid">
           <div className="admin-field admin-field--full">
-            <label htmlFor="slider-name">Project Title / Name *</label>
+            <label htmlFor="slider-name">Comparison Title *</label>
             <input
               id="slider-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Minecraft Feudal: Demon Samurai & Dragon"
+              placeholder="e.g. Minecraft Feudal: Demon Samurai Transformation"
               required
             />
           </div>
@@ -297,22 +347,23 @@ export default function UploadSlider({ onPublished }) {
               type="text"
               value={subtitle}
               onChange={(e) => setSubtitle(e.target.value)}
-              placeholder="e.g. From initial concept rough to epic dragon showdown"
+              placeholder="e.g. Demon Samurai & Dragon Overhaul"
             />
           </div>
 
           <div className="admin-field admin-field--full">
-            <label htmlFor="slider-desc">Transformation Notes / Description (Optional)</label>
+            <label htmlFor="slider-desc">Work Process / Transformation Notes</label>
             <textarea
               id="slider-desc"
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Explain the improvements: lighting overhaul, contrast, atmosphere, rim lighting..."
+              placeholder="Explain key visual enhancements: rim lighting, depth, atmospheric fog, color grading..."
             />
           </div>
         </div>
 
+        {/* Action Button */}
         <div className="admin-actions-bar">
           <button
             type="submit"
@@ -320,11 +371,11 @@ export default function UploadSlider({ onPublished }) {
             disabled={loading || !beforeBase64 || !afterBase64 || !name.trim()}
           >
             {loading ? (
-              <span>{statusMsg || 'Publishing Slider...'}</span>
+              <span>{statusMsg || 'Publishing...'}</span>
             ) : (
               <>
                 <Sparkles size={16} />
-                <span>Publish Slider to GitHub Portfolio</span>
+                <span>Publish Before & After Slider</span>
               </>
             )}
           </button>

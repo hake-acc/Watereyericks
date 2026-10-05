@@ -1,6 +1,17 @@
 import React, { useState, useRef } from 'react';
-import { UploadCloud, Image as ImageIcon, CheckCircle, AlertCircle, X, Sparkles, Layers } from 'lucide-react';
+import {
+  UploadCloud,
+  Image as ImageIcon,
+  CheckCircle,
+  AlertCircle,
+  X,
+  Sparkles,
+  Zap,
+  RefreshCw,
+  Crop,
+} from 'lucide-react';
 import Tape from '../Tape.jsx';
+import { optimizeImageForUpload, formatBytes } from './imageOptimizer.js';
 
 const DEFAULT_CATEGORIES = [
   'Minecraft',
@@ -16,8 +27,8 @@ export default function UploadThumbnail({ onPublished }) {
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const [base64, setBase64] = useState('');
-  const [dimensions, setDimensions] = useState(null);
-  const [ratioOk, setRatioOk] = useState(null);
+  const [imageMeta, setImageMeta] = useState(null);
+  const [processingImage, setProcessingImage] = useState(false);
 
   const [name, setName] = useState('');
   const [subtitle, setSubtitle] = useState('');
@@ -35,62 +46,59 @@ export default function UploadThumbnail({ onPublished }) {
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
-    processFile(selected);
+    processFile(selected, false);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     const dropped = e.dataTransfer.files?.[0];
     if (!dropped) return;
-    processFile(dropped);
+    processFile(dropped, false);
   };
 
-  const processFile = (fileObj) => {
+  const processFile = async (fileObj, force16x9 = false) => {
     setError(null);
     setSuccessResult(null);
 
-    // Validate type
     const validTypes = ['image/webp', 'image/jpeg', 'image/jpg', 'image/png'];
     if (!validTypes.includes(fileObj.type.toLowerCase())) {
       setError('Please select a valid image file (.webp, .jpg, .jpeg, or .png).');
       return;
     }
 
-    if (fileObj.size > 15 * 1024 * 1024) {
-      setError('File size exceeds the 15MB limit.');
-      return;
-    }
-
+    setProcessingImage(true);
     setFile(fileObj);
 
-    // Read to base64 and create preview
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = reader.result;
-      setPreviewUrl(dataUrl);
-      setBase64(dataUrl);
+    try {
+      const optimized = await optimizeImageForUpload(fileObj, {
+        maxWidth: 1920,
+        maxHeight: 1080,
+        quality: 0.88,
+        forceExact16x9: force16x9,
+      });
 
-      // Check dimensions and ratio
-      const img = new Image();
-      img.onload = () => {
-        const w = img.naturalWidth;
-        const h = img.naturalHeight;
-        const ratio = w / h;
-        setDimensions({ width: w, height: h, ratio });
-        // Ideal 16:9 is ~1.7778. Allow 1.55 to 1.95
-        setRatioOk(ratio >= 1.55 && ratio <= 1.95);
-      };
-      img.src = dataUrl;
-    };
-    reader.readAsDataURL(fileObj);
+      setPreviewUrl(optimized.dataUrl);
+      setBase64(optimized.base64);
+      setImageMeta(optimized);
+    } catch (err) {
+      setError(`Failed to process image: ${err.message}`);
+      clearFile();
+    } finally {
+      setProcessingImage(false);
+    }
+  };
+
+  const handleForce16x9 = () => {
+    if (file) {
+      processFile(file, true);
+    }
   };
 
   const clearFile = () => {
     setFile(null);
     setPreviewUrl('');
     setBase64('');
-    setDimensions(null);
-    setRatioOk(null);
+    setImageMeta(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -114,10 +122,10 @@ export default function UploadThumbnail({ onPublished }) {
     setError(null);
     setSuccessResult(null);
     setLoading(true);
-    setStatusMsg('1/3: Validating image and generating safe filename...');
+    setStatusMsg('1/3: Preparing optimized 1080p asset and metadata...');
 
     try {
-      setStatusMsg('2/3: Committing asset and portfolio metadata to GitHub main...');
+      setStatusMsg('2/3: Committing directly to GitHub main branch...');
       const resp = await fetch('/api/admin/upload-thumbnail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -148,14 +156,17 @@ export default function UploadThumbnail({ onPublished }) {
       setName('');
       setSubtitle('');
 
-      if (onPublished) onPublished(data.item);
+      if (onPublished) onPublished(data.item, data.portfolio);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to upload thumbnail.');
     } finally {
       setLoading(false);
       setStatusMsg('');
     }
   };
+
+  const ratio = imageMeta?.ratio || 1.777;
+  const isRatio16x9 = ratio >= 1.70 && ratio <= 1.85;
 
   return (
     <div className="admin-upload-card">
@@ -167,7 +178,7 @@ export default function UploadThumbnail({ onPublished }) {
         <div>
           <h2 className="admin-card-title">Upload Normal Thumbnail</h2>
           <p className="admin-card-desc">
-            Directly upload 16:9 YouTube thumbnails to GitHub with automatic Vercel deployment.
+            Directly upload thumbnails to GitHub with automatic 1080p optimization and Vercel deployment.
           </p>
         </div>
       </div>
@@ -207,11 +218,15 @@ export default function UploadThumbnail({ onPublished }) {
               style={{ display: 'none' }}
             />
             <div className="dropzone-icon">
-              <UploadCloud size={36} />
+              {processingImage ? <RefreshCw size={36} className="spin" /> : <UploadCloud size={36} />}
             </div>
             <div className="dropzone-text">
-              <span className="dropzone-primary">Click to select image or drag & drop</span>
-              <span className="dropzone-sub">Supports WebP, JPG, PNG (16:9 recommended, up to 15MB)</span>
+              <span className="dropzone-primary">
+                {processingImage ? 'Optimizing image...' : 'Click to select image or drag & drop'}
+              </span>
+              <span className="dropzone-sub">
+                Supports WebP, JPG, PNG • Automatically optimized to crisp 1080p WebP
+              </span>
             </div>
           </div>
         ) : (
@@ -229,13 +244,18 @@ export default function UploadThumbnail({ onPublished }) {
               </button>
             </div>
 
-            {dimensions && (
-              <div className="preview-meta-bar">
-                <span className="dim-tag">
-                  {dimensions.width} × {dimensions.height}px
+            {imageMeta && (
+              <div className="preview-meta-bar" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center', marginTop: '8px' }}>
+                <span className="dim-tag" style={{ background: '#1e293b', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>
+                  {imageMeta.width} × {imageMeta.height}px
                 </span>
-                <span className={`ratio-badge ${ratioOk ? 'ratio-ok' : 'ratio-warn'}`}>
-                  {ratioOk ? (
+                <span className="size-tag" style={{ background: '#1e293b', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', color: '#10b981' }}>
+                  <Zap size={12} style={{ display: 'inline', marginRight: '4px' }} />
+                  {formatBytes(imageMeta.optimizedSize)}
+                  {imageMeta.savedPercent > 0 && ` (Saved ${imageMeta.savedPercent}%)`}
+                </span>
+                <span className={`ratio-badge ${isRatio16x9 ? 'ratio-ok' : 'ratio-warn'}`} style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  {isRatio16x9 ? (
                     <>
                       <CheckCircle size={13} />
                       <span>16:9 Format Verified</span>
@@ -243,7 +263,15 @@ export default function UploadThumbnail({ onPublished }) {
                   ) : (
                     <>
                       <AlertCircle size={13} />
-                      <span>Aspect ratio: {dimensions.ratio.toFixed(2)}:1 (16:9 is ~1.78)</span>
+                      <span>{imageMeta.ratio.toFixed(2)}:1</span>
+                      <button
+                        type="button"
+                        onClick={handleForce16x9}
+                        style={{ marginLeft: '6px', background: '#3b82f6', color: '#fff', border: 'none', padding: '2px 6px', borderRadius: '3px', cursor: 'pointer', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}
+                        title="Auto-Fit onto 16:9 canvas"
+                      >
+                        <Crop size={11} /> Auto-Fit 16:9
+                      </button>
                     </>
                   )}
                 </span>
