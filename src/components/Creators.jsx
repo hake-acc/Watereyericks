@@ -199,6 +199,24 @@ const CREATORS = [
 ];
 
 export default function Creators() {
+  // Proactively warm up creator avatar cache during idle browser time
+  React.useEffect(() => {
+    const warmAvatarCache = () => {
+      CREATORS.forEach((creator) => {
+        const img = new Image();
+        img.src = creator.avatar;
+      });
+    };
+
+    if (typeof window !== 'undefined') {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(warmAvatarCache, { timeout: 2000 });
+      } else {
+        setTimeout(warmAvatarCache, 800);
+      }
+    }
+  }, []);
+
   return (
     <section id="creators" className="section creators-section">
       <div className="section-title">
@@ -235,7 +253,8 @@ export default function Creators() {
                     className="creator-avatar-img"
                     width="74"
                     height="74"
-                    loading="lazy"
+                    loading={i < 6 ? 'eager' : 'lazy'}
+                    fetchPriority={i < 3 ? 'high' : 'auto'}
                     decoding="async"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';

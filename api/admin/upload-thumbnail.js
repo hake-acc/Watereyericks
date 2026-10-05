@@ -42,6 +42,27 @@ export default async function handler(req, res) {
     const relativeAssetPath = `public/thumbnails/normal/${filename}`;
     const webAssetUrl = `/thumbnails/normal/${filename}`;
 
+    // Generate fast grid-optimized thumbnail (720x405 WebP)
+    let gridRelativePath = null;
+    let gridWebUrl = null;
+    let gridBase64 = null;
+
+    try {
+      const sharpModule = await import('sharp');
+      const sharp = sharpModule.default || sharpModule;
+      const gridBuffer = await sharp(imageBuffer)
+        .resize(720, 405, { fit: 'cover', kernel: 'lanczos3' })
+        .webp({ quality: 80, effort: 4 })
+        .toBuffer();
+
+      const gridFilename = filename.replace(/\.[^/.]+$/, '') + '.webp';
+      gridRelativePath = `public/thumbnails/normal/grid/${gridFilename}`;
+      gridWebUrl = `/thumbnails/normal/grid/${gridFilename}`;
+      gridBase64 = gridBuffer.toString('base64');
+    } catch (err) {
+      console.warn('Grid thumbnail generation skipped:', err.message);
+    }
+
     const newThumbnail = {
       id: `we-${Date.now().toString(36)}`,
       type: 'thumbnail',
@@ -53,20 +74,30 @@ export default async function handler(req, res) {
       tools: Array.isArray(tools) && tools.length > 0 ? tools : ['Photoshop', 'Cinema 4D'],
       image: webAssetUrl,
       img: webAssetUrl,
+      gridImage: gridWebUrl || webAssetUrl,
       width: imgInfo.width,
       height: imgInfo.height,
       createdAt: new Date().toISOString(),
     };
 
     // Perform atomic commit to GitHub
+    const filesToCommit = [
+      {
+        path: relativeAssetPath,
+        base64Content: cleanBase64,
+      },
+    ];
+
+    if (gridBase64 && gridRelativePath) {
+      filesToCommit.push({
+        path: gridRelativePath,
+        base64Content: gridBase64,
+      });
+    }
+
     const commitResult = await atomicGitHubCommit({
       commitMessage: `feat(portfolio): add thumbnail "${name.trim()}"`,
-      filesToAdd: [
-        {
-          path: relativeAssetPath,
-          base64Content: cleanBase64,
-        },
-      ],
+      filesToAdd: filesToCommit,
       updatePortfolio: (portfolio) => {
         const thumbs = portfolio.thumbnails || [];
         return {

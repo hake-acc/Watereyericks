@@ -108,9 +108,13 @@ export default function ThumbnailGallery() {
           >
             <div className="featured-showcase-media">
               <img
-                src={featured.image || featured.img}
+                src={featured.gridImage || featured.image || featured.img}
                 alt={featured.title || featured.name}
                 loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                width="1280"
+                height="720"
                 className="featured-showcase-img"
               />
               <div className="showcase-hover-overlay">
@@ -154,9 +158,13 @@ export default function ThumbnailGallery() {
             
             <div className="thumb-media-wrap">
               <img
-                src={item.image || item.img}
+                src={item.gridImage || item.image || item.img}
                 alt={`${item.title || item.name} — YouTube Thumbnail by Water Eye`}
-                loading="lazy"
+                loading={idx < 4 ? 'eager' : 'lazy'}
+                fetchPriority={idx < 2 ? 'high' : 'auto'}
+                decoding="async"
+                width="720"
+                height="405"
                 className="thumb-img"
               />
               <div className="thumb-overlay">
