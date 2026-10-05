@@ -1,7 +1,26 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-10-05T10:46:10.818Z",
+  "updatedAt": "2026-10-05T11:11:58.857Z",
   "thumbnails": [
+    {
+      "id": "we-muv5gwhv",
+      "type": "thumbnail",
+      "name": "Sword4000 (Practice)",
+      "title": "Sword4000 (Practice)",
+      "subtitle": "",
+      "category": "Minecraft",
+      "subcat": "Boss Battles",
+      "tools": [
+        "Photoshop",
+        "Cinema 4D"
+      ],
+      "image": "/thumbnails/normal/thumb-sword4000-practice-muv5gwa7-xynt.webp",
+      "img": "/thumbnails/normal/thumb-sword4000-practice-muv5gwa7-xynt.webp",
+      "gridImage": "/thumbnails/normal/grid/thumb-sword4000-practice-muv5gwa7-xynt.webp",
+      "width": 1920,
+      "height": 1080,
+      "createdAt": "2026-10-05T11:11:58.339Z"
+    },
     {
       "id": "we-01",
       "type": "thumbnail",
