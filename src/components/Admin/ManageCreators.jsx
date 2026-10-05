@@ -75,7 +75,7 @@ export default function ManageCreators({ onCreatorChanged }) {
     setSaveError(null);
 
     try {
-      const resp = await fetch('/api/admin/fetch-creator', {
+      const resp = await fetch('/api/admin/creators?action=fetch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: channelUrlInput.trim() }),
@@ -116,7 +116,7 @@ export default function ManageCreators({ onCreatorChanged }) {
     setSaveStatus('Saving to GitHub & auto-arranging by subscribers count...');
 
     try {
-      const resp = await fetch('/api/admin/add-creator', {
+      const resp = await fetch('/api/admin/creators', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -167,7 +167,7 @@ export default function ManageCreators({ onCreatorChanged }) {
 
     setDeletingId(creatorId);
     try {
-      const resp = await fetch('/api/admin/delete-creator', {
+      const resp = await fetch('/api/admin/creators?action=delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: creatorId }),
