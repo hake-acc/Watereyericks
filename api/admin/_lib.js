@@ -599,3 +599,305 @@ export async function checkVercelDeployment() {
     return { status: 'ERROR', error: err.message };
   }
 }
+
+/**
+ * Parses numeric subscriber count from formatted text like "6.89M", "524K subscribers", etc.
+ */
+export function parseSubscriberCount(str) {
+  if (!str) return 0;
+  const match = String(str).match(/([0-9]+(?:\.[0-9]+)?)\s*([KMBkmb])?/);
+  if (!match) return 0;
+  const num = parseFloat(match[1]);
+  const unit = (match[2] || '').toUpperCase();
+  if (unit === 'B') return Math.round(num * 1000000000);
+  if (unit === 'M') return Math.round(num * 1000000);
+  if (unit === 'K') return Math.round(num * 1000);
+  return Math.round(num);
+}
+
+/**
+ * Formats a numeric subscriber count into concise string (e.g. 6890000 -> "6.89M").
+ */
+export function formatSubscriberCount(countOrStr) {
+  const num = typeof countOrStr === 'number' ? countOrStr : parseSubscriberCount(countOrStr);
+  if (num >= 1000000000) {
+    const v = num / 1000000000;
+    return `${v % 1 === 0 ? v : v.toFixed(2).replace(/\.?0+$/, '')}B`;
+  }
+  if (num >= 1000000) {
+    const v = num / 1000000;
+    return `${v % 1 === 0 ? v : v.toFixed(2).replace(/\.?0+$/, '')}M`;
+  }
+  if (num >= 1000) {
+    const v = num / 1000;
+    return `${v % 1 === 0 ? v : v.toFixed(1).replace(/\.?0+$/, '')}K`;
+  }
+  return String(num);
+}
+
+/**
+ * Automatically scrapes YouTube channel name, handle, avatar URL, and subscriber count from a link or handle.
+ */
+export async function scrapeYouTubeChannel(rawInput) {
+  let targetUrl = rawInput.trim();
+  if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+    targetUrl = `https://www.youtube.com/${targetUrl.startsWith('@') ? '' : '@'}${targetUrl}`;
+  }
+
+  async function fetchUrl(url, redirectCount = 0) {
+    if (redirectCount > 5) throw new Error('Too many redirects while resolving YouTube URL');
+    const resp = await fetch(url, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept-Language': 'en-US,en;q=0.9',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+      },
+      redirect: 'manual',
+    });
+
+    if (resp.status >= 300 && resp.status < 400 && resp.headers.get('location')) {
+      const next = new URL(resp.headers.get('location'), url).href;
+      return fetchUrl(next, redirectCount + 1);
+    }
+
+    const html = await resp.text();
+    return { html, finalUrl: url };
+  }
+
+  const { html, finalUrl } = await fetchUrl(targetUrl);
+
+  let ytData = null;
+  const match =
+    html.match(/var ytInitialData\s*=\s*({.+?});<\/script>/s) ||
+    html.match(/ytInitialData\s*=\s*({.+?});/s);
+  if (match) {
+    try {
+      ytData = JSON.parse(match[1]);
+    } catch {}
+  }
+
+  const ogTitleMatch = html.match(/<meta property="og:title" content="([^"]+)">/);
+  const ogImageMatch = html.match(/<meta property="og:image" content="([^"]+)">/);
+  const ogUrlMatch = html.match(/<meta property="og:url" content="([^"]+)">/);
+  const linkCanonical = html.match(/<link rel="canonical" href="([^"]+)">/);
+  const metaDesc = html.match(/<meta property="og:description" content="([^"]+)">/);
+
+  let name = ogTitleMatch ? ogTitleMatch[1] : null;
+  let avatarUrl = ogImageMatch ? ogImageMatch[1] : null;
+  let canonicalUrl = ogUrlMatch ? ogUrlMatch[1] : linkCanonical ? linkCanonical[1] : finalUrl;
+  let subText = null;
+
+  if (ytData) {
+    // 1. pageHeaderRenderer (modern YouTube format)
+    const p = ytData.header?.pageHeaderRenderer;
+    if (p) {
+      name = name || p.pageTitle;
+      const thumbs =
+        p.content?.pageHeaderViewModel?.image?.decoratedAvatarViewModel?.avatar?.avatarViewModel
+          ?.image?.sources;
+      if (thumbs && thumbs.length) {
+        avatarUrl = thumbs[thumbs.length - 1].url;
+      }
+      const metadataRows =
+        p.content?.pageHeaderViewModel?.metadata?.contentMetadataViewModel?.metadataRows;
+      if (metadataRows) {
+        for (const row of metadataRows) {
+          for (const part of row.metadataParts || []) {
+            const text = part.text?.content || '';
+            if (/subscribers?/i.test(text)) subText = text;
+          }
+        }
+      }
+    }
+
+    // 2. c4TabbedHeaderRenderer (classic format)
+    const c = ytData.header?.c4TabbedHeaderRenderer;
+    if (c) {
+      name = name || c.title;
+      const thumbs = c.avatar?.thumbnails;
+      if (thumbs && thumbs.length) avatarUrl = thumbs[thumbs.length - 1].url;
+      if (c.subscriberCountText?.simpleText) subText = c.subscriberCountText.simpleText;
+    }
+
+    // 3. Fallback regex on JSON string
+    if (!subText) {
+      const str = JSON.stringify(ytData);
+      const s1 = str.match(/"subscriberCountText":\{"simpleText":"([^"]+)"\}/);
+      const s2 = str.match(/"content":"([0-9\.]+[KMBkmb]?\s+subscribers?)"/);
+      if (s1) subText = s1[1];
+      else if (s2) subText = s2[1];
+    }
+  }
+
+  if (!subText && metaDesc) {
+    const m = metaDesc[1].match(/([0-9\.]+[KMBkmb]?)\s+subscribers?/i);
+    if (m) subText = m[0];
+  }
+
+  // Derive clean handle
+  let handle = '';
+  const handleMatch =
+    canonicalUrl.match(/(@[a-zA-Z0-9_\-\.]+)/) || targetUrl.match(/(@[a-zA-Z0-9_\-\.]+)/);
+  if (handleMatch) {
+    handle = handleMatch[1];
+  } else if (name) {
+    handle = '@' + name.replace(/[^a-zA-Z0-9_]/g, '').toLowerCase();
+  }
+
+  const subCount = parseSubscriberCount(subText);
+  const formattedSub = formatSubscriberCount(subCount);
+
+  // Upgrade avatar quality to s240
+  if (avatarUrl && avatarUrl.includes('=s')) {
+    avatarUrl = avatarUrl.replace(/=s\d+-[^"]+/, '=s240-c-k-c0x00ffffff-no-rj');
+  }
+
+  // Fetch avatar image buffer as base64 for preview
+  let avatarBase64 = null;
+  if (avatarUrl) {
+    try {
+      const imgResp = await fetch(avatarUrl);
+      if (imgResp.ok) {
+        const arrayBuf = await imgResp.arrayBuffer();
+        const buf = Buffer.from(arrayBuf);
+        const mime = imgResp.headers.get('content-type') || 'image/jpeg';
+        avatarBase64 = `data:${mime};base64,${buf.toString('base64')}`;
+      }
+    } catch (imgErr) {
+      console.warn('Could not fetch avatar image buffer:', imgErr.message);
+    }
+  }
+
+  return {
+    name: name ? name.replace(/ - YouTube$/, '').trim() : 'Unknown Channel',
+    handle,
+    youtubeUrl: canonicalUrl,
+    avatarUrl,
+    avatarBase64,
+    subscribers: formattedSub,
+    subscribersCount: subCount,
+  };
+}
+
+/**
+ * Performs an atomic multi-file Git commit on src/data/creators.json.
+ */
+export async function atomicGitHubCreatorsCommit({
+  commitMessage,
+  filesToAdd = [],
+  pathsToDelete = [],
+  updateCreators,
+}) {
+  const maxRetries = 3;
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const refData = await githubRequest(`/git/ref/heads/${GITHUB_BRANCH}`);
+      const latestCommitSha = refData.object.sha;
+
+      const commitData = await githubRequest(`/git/commits/${latestCommitSha}`);
+      const baseTreeSha = commitData.tree.sha;
+
+      let currentData = { version: '1.0.0', creators: [] };
+      try {
+        const fileData = await githubRequest(
+          `/contents/src/data/creators.json?ref=${latestCommitSha}`
+        );
+        if (fileData.content) {
+          const raw = Buffer.from(fileData.content, 'base64').toString('utf8');
+          currentData = JSON.parse(raw);
+        }
+      } catch (err) {
+        console.warn('Could not fetch creators.json from GitHub, using default base.', err.message);
+      }
+
+      const updatedData = await updateCreators(currentData);
+      updatedData.updatedAt = new Date().toISOString();
+
+      const treeEntries = [];
+
+      for (const file of filesToAdd) {
+        const blobResp = await githubRequest('/git/blobs', {
+          method: 'POST',
+          body: {
+            content: file.base64Content,
+            encoding: 'base64',
+          },
+        });
+        treeEntries.push({
+          path: file.path,
+          mode: '100644',
+          type: 'blob',
+          sha: blobResp.sha,
+        });
+      }
+
+      const jsonBuf = Buffer.from(JSON.stringify(updatedData, null, 2), 'utf8');
+      const jsonBlob = await githubRequest('/git/blobs', {
+        method: 'POST',
+        body: {
+          content: jsonBuf.toString('base64'),
+          encoding: 'base64',
+        },
+      });
+      treeEntries.push({
+        path: 'src/data/creators.json',
+        mode: '100644',
+        type: 'blob',
+        sha: jsonBlob.sha,
+      });
+
+      for (const delPath of pathsToDelete) {
+        const cleanPath = delPath.replace(/^\//, '');
+        treeEntries.push({
+          path: cleanPath,
+          mode: '100644',
+          type: 'blob',
+          sha: null,
+        });
+      }
+
+      const newTree = await githubRequest('/git/trees', {
+        method: 'POST',
+        body: {
+          base_tree: baseTreeSha,
+          tree: treeEntries,
+        },
+      });
+
+      const newCommit = await githubRequest('/git/commits', {
+        method: 'POST',
+        body: {
+          message: commitMessage,
+          tree: newTree.sha,
+          parents: [latestCommitSha],
+        },
+      });
+
+      await githubRequest(`/git/refs/heads/${GITHUB_BRANCH}`, {
+        method: 'PATCH',
+        body: {
+          sha: newCommit.sha,
+          force: false,
+        },
+      });
+
+      return {
+        success: true,
+        commitSha: newCommit.sha,
+        creators: updatedData,
+      };
+    } catch (err) {
+      lastError = err;
+      if (err.status === 422 || err.message?.includes('fast forward')) {
+        await new Promise((r) => setTimeout(r, 600 * attempt));
+        continue;
+      }
+      throw err;
+    }
+  }
+
+  throw new Error(`Failed to commit creators to GitHub after ${maxRetries} attempts: ${lastError?.message}`);
+}

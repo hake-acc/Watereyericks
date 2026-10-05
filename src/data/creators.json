@@ -1,0 +1,222 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-10-05T10:29:10.575Z",
+  "creators": [
+    {
+      "id": "yessmartypie",
+      "name": "YesSmartyPie",
+      "subscribers": "6.89M",
+      "youtubeUrl": "https://www.youtube.com/@yessmartypie",
+      "handle": "@yessmartypie",
+      "avatar": "/creators/yessmartypie.webp",
+      "subscribersCount": 6890000
+    },
+    {
+      "id": "senpaispider",
+      "name": "SenpaiSpider",
+      "subscribers": "2.74M",
+      "youtubeUrl": "https://www.youtube.com/@senpaispider",
+      "handle": "@senpaispider",
+      "avatar": "/creators/senpaispider.webp",
+      "subscribersCount": 2740000
+    },
+    {
+      "id": "yugplayz",
+      "name": "Yug Playz",
+      "subscribers": "2.64M",
+      "youtubeUrl": "https://www.youtube.com/@yugplayz",
+      "handle": "@yugplayz",
+      "avatar": "/creators/yugplayz.webp",
+      "subscribersCount": 2640000
+    },
+    {
+      "id": "senpaiextras",
+      "name": "SenpaiExtras",
+      "subscribers": "2.38M",
+      "youtubeUrl": "https://www.youtube.com/@senpaiextras",
+      "handle": "@senpaiextras",
+      "avatar": "/creators/senpaiextras.webp",
+      "subscribersCount": 2380000
+    },
+    {
+      "id": "imtiyano",
+      "name": "IMTIYANO",
+      "subscribers": "1.92M",
+      "youtubeUrl": "https://www.youtube.com/@imtiyano",
+      "handle": "@imtiyano",
+      "avatar": "/creators/imtiyano.webp",
+      "subscribersCount": 1920000
+    },
+    {
+      "id": "bulkystar",
+      "name": "Bulky Star",
+      "subscribers": "1.42M",
+      "youtubeUrl": "https://www.youtube.com/@bulkystar",
+      "handle": "@bulkystar",
+      "avatar": "/creators/bulkystar.webp",
+      "subscribersCount": 1420000
+    },
+    {
+      "id": "risibletwins",
+      "name": "Risible Twins",
+      "subscribers": "1.17M",
+      "youtubeUrl": "https://www.youtube.com/@risibletwins",
+      "handle": "@risibletwins",
+      "avatar": "/creators/risibletwins.webp",
+      "subscribersCount": 1170000
+    },
+    {
+      "id": "nizgamer",
+      "name": "Niz Gamer",
+      "subscribers": "939K",
+      "youtubeUrl": "https://www.youtube.com/@nizgamer",
+      "handle": "@nizgamer",
+      "avatar": "/creators/nizgamer.webp",
+      "subscribersCount": 939000
+    },
+    {
+      "id": "pepper",
+      "name": "Pepper",
+      "subscribers": "512K",
+      "youtubeUrl": "https://youtube.com/@justapepper?si=3OVvuvt9Mjv5BRSs",
+      "handle": "@justapepper",
+      "avatar": "/creators/pepper_channel.webp",
+      "subscribersCount": 512000
+    },
+    {
+      "id": "unsortedguy",
+      "name": "unsorted guy",
+      "subscribers": "441K",
+      "youtubeUrl": "https://www.youtube.com/@unsortedguy",
+      "handle": "@unsortedguy",
+      "avatar": "/creators/unsortedguy.webp",
+      "subscribersCount": 441000
+    },
+    {
+      "id": "mrfenix47",
+      "name": "Mr Fenix 47",
+      "subscribers": "405K",
+      "youtubeUrl": "https://www.youtube.com/@mrfenix47",
+      "handle": "@mrfenix47",
+      "avatar": "/creators/mrfenix47.webp",
+      "subscribersCount": 405000
+    },
+    {
+      "id": "protagnst",
+      "name": "Protag nst",
+      "subscribers": "379K",
+      "youtubeUrl": "https://www.youtube.com/@protagnst",
+      "handle": "@protagnst",
+      "avatar": "/creators/protagnst.webp",
+      "subscribersCount": 379000
+    },
+    {
+      "id": "bulky",
+      "name": "Bulky",
+      "subscribers": "324K",
+      "youtubeUrl": "https://www.youtube.com/@bulky",
+      "handle": "@bulky",
+      "avatar": "/creators/bulky_channel.webp",
+      "subscribersCount": 324000
+    },
+    {
+      "id": "notrexy",
+      "name": "NotRexy",
+      "subscribers": "261K",
+      "youtubeUrl": "https://www.youtube.com/@notrexy",
+      "handle": "@notrexy",
+      "avatar": "/creators/notrexy.webp",
+      "subscribersCount": 261000
+    },
+    {
+      "id": "mitsuhagaming",
+      "name": "Mitsuha Gaming",
+      "subscribers": "123K",
+      "youtubeUrl": "https://youtube.com/@mitsuha_gaming?si=hhSJdXHPCIp-smn8",
+      "handle": "@mitsuha_gaming",
+      "avatar": "/creators/mitsuha_gaming.webp",
+      "subscribersCount": 123000
+    },
+    {
+      "id": "aadmiplays",
+      "name": "Aadmi Plays",
+      "subscribers": "73.5K",
+      "youtubeUrl": "https://www.youtube.com/@aadmiiplays",
+      "handle": "@aadmiiplays",
+      "avatar": "/creators/aadmiplays_channel.webp",
+      "subscribersCount": 73500
+    },
+    {
+      "id": "iskevin",
+      "name": "IsKevin",
+      "subscribers": "68.6K",
+      "youtubeUrl": "https://www.youtube.com/@iskevin",
+      "handle": "@iskevin",
+      "avatar": "/creators/iskevin.webp",
+      "subscribersCount": 68600
+    },
+    {
+      "id": "livingextra",
+      "name": "LivingExtra",
+      "subscribers": "34.9K",
+      "youtubeUrl": "https://youtube.com/@livingextraop?si=FpXr3eGi0LfbW8eK",
+      "handle": "@livingextraop",
+      "avatar": "/creators/livingextra_op.webp",
+      "subscribersCount": 34900
+    },
+    {
+      "id": "palmzy",
+      "name": "Palmzy",
+      "subscribers": "27.4K",
+      "youtubeUrl": "https://www.youtube.com/@palmzyyt",
+      "handle": "@palmzyyt",
+      "avatar": "/creators/palmzy.webp",
+      "subscribersCount": 27400
+    },
+    {
+      "id": "definitelydeadyt",
+      "name": "DefinitelyDead",
+      "subscribers": "22.8K",
+      "youtubeUrl": "https://www.youtube.com/@definitelydeadyt",
+      "handle": "@definitelydeadyt",
+      "avatar": "/creators/definitelydead_tv.webp",
+      "subscribersCount": 22800
+    },
+    {
+      "id": "camel27",
+      "name": "Camel27",
+      "subscribers": "18.3K",
+      "youtubeUrl": "https://www.youtube.com/channel/UCk4WYUDThO4RuSfFR-CmKfw",
+      "handle": "@Camel27_YT",
+      "avatar": "/creators/camel27_channel.webp",
+      "subscribersCount": 18300
+    },
+    {
+      "id": "eltro",
+      "name": "ElTro",
+      "subscribers": "10.4K",
+      "youtubeUrl": "https://www.youtube.com/@elastromc",
+      "handle": "@elastromc",
+      "avatar": "/creators/eltro_mc.webp",
+      "subscribersCount": 10400
+    },
+    {
+      "id": "milanzonderq",
+      "name": "MilanZonderQ",
+      "subscribers": "1.09K",
+      "youtubeUrl": "https://www.youtube.com/@milanzonderq",
+      "handle": "@milanzonderq",
+      "avatar": "/creators/milanzonderq.webp",
+      "subscribersCount": 1090
+    },
+    {
+      "id": "definitelydead",
+      "name": "DefinitelyDead",
+      "subscribers": "739",
+      "youtubeUrl": "https://www.youtube.com/@definitelydead",
+      "handle": "@definitelydead",
+      "avatar": "/creators/definitelydead.webp",
+      "subscribersCount": 739
+    }
+  ]
+}

@@ -3,12 +3,14 @@ import AdminLogin from './AdminLogin.jsx';
 import UploadThumbnail from './UploadThumbnail.jsx';
 import UploadSlider from './UploadSlider.jsx';
 import PortfolioList from './PortfolioList.jsx';
+import ManageCreators from './ManageCreators.jsx';
 import {
   ShieldCheck,
   LogOut,
   ExternalLink,
   Image as ImageIcon,
   Sliders,
+  Youtube,
   RefreshCw,
   CheckCircle,
   Clock,
@@ -17,12 +19,14 @@ import {
 } from 'lucide-react';
 import Tape from '../Tape.jsx';
 import portfolioFallback from '../../data/portfolio.json';
+import creatorsFallback from '../../data/creators.json';
 import './admin.css';
 
 export default function AdminDashboard({ onNavigateHome }) {
   const [authState, setAuthState] = useState({ checking: true, authenticated: false, user: null });
-  const [activeTab, setActiveTab] = useState('thumbnail'); // 'thumbnail' | 'slider'
+  const [activeTab, setActiveTab] = useState('thumbnail'); // 'thumbnail' | 'slider' | 'creators'
   const [portfolio, setPortfolio] = useState(portfolioFallback);
+  const [creatorsCount, setCreatorsCount] = useState(creatorsFallback.creators?.length || 0);
   const [deployStatus, setDeployStatus] = useState({ status: 'READY', lastChecked: Date.now() });
 
   // Add noindex meta tag dynamically
@@ -131,6 +135,20 @@ export default function AdminDashboard({ onNavigateHome }) {
     setDeployStatus({ status: 'BUILDING', lastChecked: Date.now() });
   };
 
+  const handleCreatorChanged = async () => {
+    pollDeployStatus();
+    setDeployStatus({ status: 'BUILDING', lastChecked: Date.now() });
+    try {
+      const resp = await fetch('/api/admin/creators');
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.creators) setCreatorsCount(data.creators.length);
+      }
+    } catch {
+      // ignore
+    }
+  };
+
   if (authState.checking) {
     return (
       <div className="admin-loading-screen">
@@ -225,20 +243,37 @@ export default function AdminDashboard({ onNavigateHome }) {
               <span>Before / After Slider</span>
               <span className="tab-badge">{sliderCount}</span>
             </button>
+
+            <button
+              role="tab"
+              aria-selected={activeTab === 'creators'}
+              className={`admin-tab-btn ${activeTab === 'creators' ? 'active' : ''}`}
+              onClick={() => setActiveTab('creators')}
+            >
+              <Youtube size={18} />
+              <span>YouTube Creators</span>
+              <span className="tab-badge">{creatorsCount}</span>
+            </button>
           </div>
         </div>
 
         {/* Tab Form Panels */}
         <div className="admin-panel-wrap">
-          {activeTab === 'thumbnail' ? (
+          {activeTab === 'thumbnail' && (
             <UploadThumbnail onPublished={handleItemPublished} />
-          ) : (
+          )}
+          {activeTab === 'slider' && (
             <UploadSlider onPublished={handleItemPublished} />
+          )}
+          {activeTab === 'creators' && (
+            <ManageCreators onCreatorChanged={handleCreatorChanged} />
           )}
         </div>
 
-        {/* Content Management Grid */}
-        <PortfolioList portfolio={portfolio} onDeleted={handleItemDeleted} />
+        {/* Content Management Grid for Thumbnails (hidden on creators tab) */}
+        {activeTab !== 'creators' && (
+          <PortfolioList portfolio={portfolio} onDeleted={handleItemDeleted} />
+        )}
       </main>
     </div>
   );
